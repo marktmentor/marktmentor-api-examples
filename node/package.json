@@ -1,0 +1,13 @@
+{
+  "name": "marktmentor-api-examples-node",
+  "private": true,
+  "type": "module",
+  "description": "MarktMentor Public API examples. No dependencies.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "check": "node check.mjs",
+    "products": "node products-to-csv.mjs",
+    "ean-history": "node ean-history.mjs",
+    "store": "node store-export.mjs"
+  }
+}

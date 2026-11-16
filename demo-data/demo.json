@@ -1,0 +1,1901 @@
+{
+ "notice": "Sample data from the MarktMentor API reference. Research examples were recorded on 2026-11-12; store, organization and reference examples are fictional. Not live data.",
+ "capturedAt": "2026-11-12",
+ "productCode": "9300000138905032",
+ "nicheId": "6797",
+ "routes": {
+  "research/products/": {
+   "query": {
+    "search": "drinkfles",
+    "pageSize": 3,
+    "market": "ALL",
+    "period": "30d"
+   },
+   "response": {
+    "market": "ALL",
+    "period": "30d",
+    "pagination": {
+     "page": 1,
+     "pageSize": 3,
+     "total": 3,
+     "hasNext": false
+    },
+    "data": [
+     {
+      "productCode": "9300000138905032",
+      "ean": "5407005143414",
+      "title": "Kambukka Elton drinkfles 750ml - Wild Storm met 3-in-1 deksel en makkelijke reiniging",
+      "brand": "Kambukka",
+      "familyName": "Elton drinkfles",
+      "imageUrl": "https://media.s-bol.com/75rpmjnMAm1G/wm63AjM/550x604.jpg",
+      "availableSince": "2023-04-21",
+      "rating": 4.2,
+      "reviewCount": 70,
+      "periodReviews": {
+       "count": 4,
+       "averageRating": 5.0,
+       "ratings": {
+        "5": 4,
+        "4": 0,
+        "3": 0,
+        "2": 0,
+        "1": 0
+       }
+      },
+      "updatedAt": "2026-11-12T00:00:00Z",
+      "categories": [
+       {
+        "categoryId": 11764,
+        "name": "Koken & Tafelen"
+       },
+       {
+        "categoryId": 21822,
+        "name": "Waterfilters & Drinkflessen"
+       },
+       {
+        "categoryId": 40142,
+        "name": "Drinkflessen"
+       }
+      ],
+      "mainCategoryPosition": 3.0,
+      "dimensions": {
+       "lengthCm": 25.899999618530273,
+       "widthCm": 10.399999618530273,
+       "heightCm": 9.399999618530273,
+       "weightGrams": 200.0,
+       "packageType": "Pakket M"
+      },
+      "lvbPossible": true,
+      "commission": [
+       {
+        "priceBelow": 10.0,
+        "fixed": 0.3,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": 20.0,
+        "fixed": 0.54,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": 100.0,
+        "fixed": 1.15,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": null,
+        "fixed": 1.15,
+        "percentage": 13.0
+       }
+      ],
+      "markets": {
+       "NL": {
+        "price": 22.45,
+        "sales": 148.0,
+        "revenue": 3292.32,
+        "impressions": 2434.0,
+        "sellerCount": 2,
+        "searchTermCount": 11.0,
+        "deliveryDays": 1.13
+       },
+       "BE": {
+        "price": 22.45,
+        "sales": 45.0,
+        "revenue": 1000.55,
+        "impressions": 1972.0,
+        "sellerCount": 2,
+        "searchTermCount": 11.0,
+        "deliveryDays": 1.13
+       }
+      }
+     },
+     {
+      "productCode": "9300000265715962",
+      "ean": "8721398606163",
+      "title": "Cabau - Bloom Waterfles / Drinkfles - 1 liter - Cherry - Handige drinktuit & unieke maataanduiding - BPA- & Lekvrij - Drinkfles met rietje volwassenen - Drinkfles volwassenen - Cadeau voor haar",
+      "brand": "cabau",
+      "familyName": null,
+      "imageUrl": "https://media.s-bol.com/B4XykYM33OGk/ANmxY5O/289x840.jpg",
+      "availableSince": "2026-07-20",
+      "rating": 4.0,
+      "reviewCount": 156,
+      "periodReviews": {
+       "count": 0,
+       "averageRating": null,
+       "ratings": {
+        "5": 0,
+        "4": 0,
+        "3": 0,
+        "2": 0,
+        "1": 0
+       }
+      },
+      "updatedAt": "2026-11-12T00:00:00Z",
+      "categories": [
+       {
+        "categoryId": 11764,
+        "name": "Koken & Tafelen"
+       },
+       {
+        "categoryId": 21822,
+        "name": "Waterfilters & Drinkflessen"
+       },
+       {
+        "categoryId": 40142,
+        "name": "Drinkflessen"
+       }
+      ],
+      "mainCategoryPosition": 37.5,
+      "dimensions": {
+       "lengthCm": 9.0,
+       "widthCm": 9.5,
+       "heightCm": 30.0,
+       "weightGrams": 300.0,
+       "packageType": "Pakket M"
+      },
+      "lvbPossible": true,
+      "commission": [
+       {
+        "priceBelow": 10.0,
+        "fixed": 0.3,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": 20.0,
+        "fixed": 0.54,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": 100.0,
+        "fixed": 1.15,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": null,
+        "fixed": 1.15,
+        "percentage": 13.0
+       }
+      ],
+      "markets": {
+       "NL": {
+        "price": 23.95,
+        "sales": 831.0,
+        "revenue": 19902.45,
+        "impressions": 7143.0,
+        "sellerCount": 0,
+        "searchTermCount": 22.0,
+        "deliveryDays": 2.57
+       },
+       "BE": {
+        "price": 23.95,
+        "sales": 49.0,
+        "revenue": 1173.55,
+        "impressions": 248.0,
+        "sellerCount": 0,
+        "searchTermCount": 10.0,
+        "deliveryDays": 2.57
+       }
+      }
+     },
+     {
+      "productCode": "9300000033096850",
+      "ean": "8718469123810",
+      "title": "Dopper Original Drinkfles - 450 ml - Cosmic Storm",
+      "brand": "Dopper",
+      "familyName": "Dopper Original",
+      "imageUrl": "https://media.s-bol.com/gM7JEqjYo6A6/XQYVlNl/250x200.jpg",
+      "availableSince": "2022-02-13",
+      "rating": 4.5,
+      "reviewCount": 696,
+      "periodReviews": {
+       "count": 2,
+       "averageRating": 5.0,
+       "ratings": {
+        "5": 2,
+        "4": 0,
+        "3": 0,
+        "2": 0,
+        "1": 0
+       }
+      },
+      "updatedAt": "2026-11-12T00:00:00Z",
+      "categories": [
+       {
+        "categoryId": 11764,
+        "name": "Koken & Tafelen"
+       },
+       {
+        "categoryId": 21822,
+        "name": "Waterfilters & Drinkflessen"
+       },
+       {
+        "categoryId": 40142,
+        "name": "Drinkflessen"
+       }
+      ],
+      "mainCategoryPosition": 11.0,
+      "dimensions": {
+       "lengthCm": 23.600000381469727,
+       "widthCm": 6.099999904632568,
+       "heightCm": 5.599999904632568,
+       "weightGrams": 108.0,
+       "packageType": "Pakket S"
+      },
+      "lvbPossible": true,
+      "commission": [
+       {
+        "priceBelow": 10.0,
+        "fixed": 0.3,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": 20.0,
+        "fixed": 0.54,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": 100.0,
+        "fixed": 1.15,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": null,
+        "fixed": 1.15,
+        "percentage": 13.0
+       }
+      ],
+      "markets": {
+       "NL": {
+        "price": 14.95,
+        "sales": 687.0,
+        "revenue": 10270.65,
+        "impressions": 5581.0,
+        "sellerCount": 1,
+        "searchTermCount": 12.0,
+        "deliveryDays": 1.16
+       },
+       "BE": {
+        "price": 14.95,
+        "sales": 151.0,
+        "revenue": 2257.45,
+        "impressions": 2008.0,
+        "sellerCount": 1,
+        "searchTermCount": 7.0,
+        "deliveryDays": 1.16
+       }
+      }
+     }
+    ]
+   }
+  },
+  "research/products/{product_code}/": {
+   "query": {
+    "market": "ALL",
+    "period": "30d"
+   },
+   "response": {
+    "market": "ALL",
+    "period": "30d",
+    "data": {
+     "productCode": "9300000138905032",
+     "ean": "5407005143414",
+     "title": "Kambukka Elton drinkfles 750ml - Wild Storm met 3-in-1 deksel en makkelijke reiniging",
+     "brand": "Kambukka",
+     "familyName": "Elton drinkfles",
+     "imageUrl": "https://media.s-bol.com/75rpmjnMAm1G/wm63AjM/550x604.jpg",
+     "availableSince": "2023-04-21",
+     "rating": 4.2,
+     "reviewCount": 70,
+     "periodReviews": {
+      "count": 4,
+      "averageRating": 5.0,
+      "ratings": {
+       "5": 4,
+       "4": 0,
+       "3": 0,
+       "2": 0,
+       "1": 0
+      }
+     },
+     "updatedAt": "2026-11-12T00:00:00Z",
+     "categories": [
+      {
+       "categoryId": 11764,
+       "name": "Koken & Tafelen"
+      },
+      {
+       "categoryId": 21822,
+       "name": "Waterfilters & Drinkflessen"
+      },
+      {
+       "categoryId": 40142,
+       "name": "Drinkflessen"
+      }
+     ],
+     "mainCategoryPosition": 3.0,
+     "dimensions": {
+      "lengthCm": 25.899999618530273,
+      "widthCm": 10.399999618530273,
+      "heightCm": 9.399999618530273,
+      "weightGrams": 200.0,
+      "packageType": "Pakket M"
+     },
+     "lvbPossible": true,
+     "commission": [
+      {
+       "priceBelow": 10.0,
+       "fixed": 0.3,
+       "percentage": 13.0
+      },
+      {
+       "priceBelow": 20.0,
+       "fixed": 0.54,
+       "percentage": 13.0
+      },
+      {
+       "priceBelow": 100.0,
+       "fixed": 1.15,
+       "percentage": 13.0
+      },
+      {
+       "priceBelow": null,
+       "fixed": 1.15,
+       "percentage": 13.0
+      }
+     ],
+     "markets": {
+      "NL": {
+       "price": 22.45,
+       "sales": 148.0,
+       "revenue": 3292.32,
+       "impressions": 2434.0,
+       "sellerCount": 2,
+       "searchTermCount": 11.0,
+       "deliveryDays": 1.13
+      },
+      "BE": {
+       "price": 22.45,
+       "sales": 45.0,
+       "revenue": 1000.55,
+       "impressions": 1972.0,
+       "sellerCount": 2,
+       "searchTermCount": 11.0,
+       "deliveryDays": 1.13
+      }
+     },
+     "variantCodes": [
+      "9300000022650450",
+      "9300000138905029",
+      "9300000138905030"
+     ]
+    }
+   }
+  },
+  "research/niches/": {
+   "query": {
+    "search": "drinkfles",
+    "pageSize": 3,
+    "market": "ALL",
+    "period": "30d"
+   },
+   "response": {
+    "market": "ALL",
+    "period": "30d",
+    "pagination": {
+     "page": 1,
+     "pageSize": 3,
+     "total": 3,
+     "hasNext": false
+    },
+    "data": [
+     {
+      "nicheId": "6797",
+      "name": "drinkfles",
+      "productCount": 25956,
+      "qualityScore": 5.83,
+      "competitionScore": 10.0,
+      "markets": {
+       "NL": {
+        "searchVolume": 6286.0,
+        "sales": 32892.0,
+        "revenue": 728137.05
+       },
+       "BE": {
+        "searchVolume": 2332.0,
+        "sales": 7810.0,
+        "revenue": 177062.22
+       }
+      }
+     },
+     {
+      "nicheId": "4844",
+      "name": "dopper drinkfles",
+      "productCount": 99,
+      "qualityScore": 7.09,
+      "competitionScore": 10.0,
+      "markets": {
+       "NL": {
+        "searchVolume": 1683.0,
+        "sales": 7547.0,
+        "revenue": 167502.55
+       },
+       "BE": {
+        "searchVolume": 499.0,
+        "sales": 1710.0,
+        "revenue": 42350.27
+       }
+      }
+     },
+     {
+      "nicheId": "11966",
+      "name": "camelbak drinkfles",
+      "productCount": 182,
+      "qualityScore": 5.67,
+      "competitionScore": 10.0,
+      "markets": {
+       "NL": {
+        "searchVolume": 1802.0,
+        "sales": 2251.0,
+        "revenue": 58756.63
+       },
+       "BE": {
+        "searchVolume": 139.0,
+        "sales": 459.0,
+        "revenue": 11873.05
+       }
+      }
+     }
+    ]
+   }
+  },
+  "research/niches/{niche_id}/": {
+   "query": {
+    "market": "ALL",
+    "period": "30d",
+    "comparePeriods": true
+   },
+   "response": {
+    "market": "ALL",
+    "period": "30d",
+    "data": {
+     "nicheId": "6797",
+     "name": "drinkfles",
+     "productCount": 25956,
+     "qualityScore": 5.83,
+     "competitionScore": 10.0,
+     "markets": {
+      "NL": {
+       "searchVolume": 6286.0,
+       "sales": 32892.0,
+       "revenue": 728137.05
+      },
+      "BE": {
+       "searchVolume": 2332.0,
+       "sales": 7810.0,
+       "revenue": 177062.22
+      }
+     },
+     "periods": [
+      {
+       "period": "30d",
+       "markets": {
+        "NL": {
+         "searchVolume": 6286.0,
+         "sales": 32892.0,
+         "revenue": 728137.05
+        },
+        "BE": {
+         "searchVolume": 2332.0,
+         "sales": 7810.0,
+         "revenue": 177062.22
+        }
+       }
+      },
+      {
+       "period": "90d",
+       "markets": {
+        "NL": {
+         "searchVolume": 24608.0,
+         "sales": 109683.0,
+         "revenue": 2448182.42
+        },
+        "BE": {
+         "searchVolume": 11883.0,
+         "sales": 30952.0,
+         "revenue": 735380.25
+        }
+       }
+      },
+      {
+       "period": "365d",
+       "markets": {
+        "NL": {
+         "searchVolume": 96121.0,
+         "sales": 396331.0,
+         "revenue": 8464198.77
+        },
+        "BE": {
+         "searchVolume": 40019.0,
+         "sales": 103561.0,
+         "revenue": 2367444.83
+        }
+       }
+      }
+     ]
+    }
+   }
+  },
+  "research/niches/{niche_id}/product-distributions/": {
+   "query": {
+    "period": "30d"
+   },
+   "response": {
+    "period": "30d",
+    "data": {
+     "productCount": 2934,
+     "total": {
+      "price": [
+       {
+        "fromValue": null,
+        "toValue": 11.0,
+        "productCount": 103
+       },
+       {
+        "fromValue": 11.0,
+        "toValue": 21.0,
+        "productCount": 801
+       },
+       {
+        "fromValue": 21.0,
+        "toValue": 51.0,
+        "productCount": 1759
+       }
+      ],
+      "sales": [
+       {
+        "fromValue": null,
+        "toValue": 1.0,
+        "productCount": 1647
+       },
+       {
+        "fromValue": 1.0,
+        "toValue": 11.0,
+        "productCount": 573
+       },
+       {
+        "fromValue": 11.0,
+        "toValue": 51.0,
+        "productCount": 469
+       }
+      ],
+      "revenue": [
+       {
+        "fromValue": null,
+        "toValue": 1.0,
+        "productCount": 1648
+       },
+       {
+        "fromValue": 1.0,
+        "toValue": 501.0,
+        "productCount": 841
+       },
+       {
+        "fromValue": 501.0,
+        "toValue": 1001.0,
+        "productCount": 170
+       }
+      ]
+     }
+    }
+   }
+  },
+  "research/niches/{niche_id}/products/": {
+   "query": {
+    "pageSize": 3,
+    "market": "ALL",
+    "period": "30d"
+   },
+   "response": {
+    "market": "ALL",
+    "period": "30d",
+    "pagination": {
+     "page": 1,
+     "pageSize": 3,
+     "total": 3,
+     "hasNext": false
+    },
+    "data": [
+     {
+      "productCode": "9300000138905032",
+      "ean": "5407005143414",
+      "title": "Kambukka Elton drinkfles 750ml - Wild Storm met 3-in-1 deksel en makkelijke reiniging",
+      "brand": "Kambukka",
+      "familyName": "Elton drinkfles",
+      "imageUrl": "https://media.s-bol.com/75rpmjnMAm1G/wm63AjM/550x604.jpg",
+      "availableSince": "2023-04-21",
+      "rating": 4.2,
+      "reviewCount": 70,
+      "periodReviews": {
+       "count": 4,
+       "averageRating": 5.0,
+       "ratings": {
+        "5": 4,
+        "4": 0,
+        "3": 0,
+        "2": 0,
+        "1": 0
+       }
+      },
+      "updatedAt": "2026-11-12T00:00:00Z",
+      "categories": [
+       {
+        "categoryId": 11764,
+        "name": "Koken & Tafelen"
+       },
+       {
+        "categoryId": 21822,
+        "name": "Waterfilters & Drinkflessen"
+       },
+       {
+        "categoryId": 40142,
+        "name": "Drinkflessen"
+       }
+      ],
+      "mainCategoryPosition": 3.0,
+      "dimensions": {
+       "lengthCm": 25.899999618530273,
+       "widthCm": 10.399999618530273,
+       "heightCm": 9.399999618530273,
+       "weightGrams": 200.0,
+       "packageType": "Pakket M"
+      },
+      "lvbPossible": true,
+      "commission": [
+       {
+        "priceBelow": 10.0,
+        "fixed": 0.3,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": 20.0,
+        "fixed": 0.54,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": 100.0,
+        "fixed": 1.15,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": null,
+        "fixed": 1.15,
+        "percentage": 13.0
+       }
+      ],
+      "markets": {
+       "NL": {
+        "price": 22.45,
+        "sales": 148.0,
+        "revenue": 3292.32,
+        "impressions": 2434.0,
+        "sellerCount": 2,
+        "searchTermCount": 11.0,
+        "deliveryDays": 1.13
+       },
+       "BE": {
+        "price": 22.45,
+        "sales": 45.0,
+        "revenue": 1000.55,
+        "impressions": 1972.0,
+        "sellerCount": 2,
+        "searchTermCount": 11.0,
+        "deliveryDays": 1.13
+       }
+      }
+     },
+     {
+      "productCode": "9300000265715962",
+      "ean": "8721398606163",
+      "title": "Cabau - Bloom Waterfles / Drinkfles - 1 liter - Cherry - Handige drinktuit & unieke maataanduiding - BPA- & Lekvrij - Drinkfles met rietje volwassenen - Drinkfles volwassenen - Cadeau voor haar",
+      "brand": "cabau",
+      "familyName": null,
+      "imageUrl": "https://media.s-bol.com/B4XykYM33OGk/ANmxY5O/289x840.jpg",
+      "availableSince": "2026-07-20",
+      "rating": 4.0,
+      "reviewCount": 156,
+      "periodReviews": {
+       "count": 0,
+       "averageRating": null,
+       "ratings": {
+        "5": 0,
+        "4": 0,
+        "3": 0,
+        "2": 0,
+        "1": 0
+       }
+      },
+      "updatedAt": "2026-11-12T00:00:00Z",
+      "categories": [
+       {
+        "categoryId": 11764,
+        "name": "Koken & Tafelen"
+       },
+       {
+        "categoryId": 21822,
+        "name": "Waterfilters & Drinkflessen"
+       },
+       {
+        "categoryId": 40142,
+        "name": "Drinkflessen"
+       }
+      ],
+      "mainCategoryPosition": 37.5,
+      "dimensions": {
+       "lengthCm": 9.0,
+       "widthCm": 9.5,
+       "heightCm": 30.0,
+       "weightGrams": 300.0,
+       "packageType": "Pakket M"
+      },
+      "lvbPossible": true,
+      "commission": [
+       {
+        "priceBelow": 10.0,
+        "fixed": 0.3,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": 20.0,
+        "fixed": 0.54,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": 100.0,
+        "fixed": 1.15,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": null,
+        "fixed": 1.15,
+        "percentage": 13.0
+       }
+      ],
+      "markets": {
+       "NL": {
+        "price": 23.95,
+        "sales": 831.0,
+        "revenue": 19902.45,
+        "impressions": 7143.0,
+        "sellerCount": 0,
+        "searchTermCount": 22.0,
+        "deliveryDays": 2.57
+       },
+       "BE": {
+        "price": 23.95,
+        "sales": 49.0,
+        "revenue": 1173.55,
+        "impressions": 248.0,
+        "sellerCount": 0,
+        "searchTermCount": 10.0,
+        "deliveryDays": 2.57
+       }
+      }
+     },
+     {
+      "productCode": "9300000033096850",
+      "ean": "8718469123810",
+      "title": "Dopper Original Drinkfles - 450 ml - Cosmic Storm",
+      "brand": "Dopper",
+      "familyName": "Dopper Original",
+      "imageUrl": "https://media.s-bol.com/gM7JEqjYo6A6/XQYVlNl/250x200.jpg",
+      "availableSince": "2022-02-13",
+      "rating": 4.5,
+      "reviewCount": 696,
+      "periodReviews": {
+       "count": 2,
+       "averageRating": 5.0,
+       "ratings": {
+        "5": 2,
+        "4": 0,
+        "3": 0,
+        "2": 0,
+        "1": 0
+       }
+      },
+      "updatedAt": "2026-11-12T00:00:00Z",
+      "categories": [
+       {
+        "categoryId": 11764,
+        "name": "Koken & Tafelen"
+       },
+       {
+        "categoryId": 21822,
+        "name": "Waterfilters & Drinkflessen"
+       },
+       {
+        "categoryId": 40142,
+        "name": "Drinkflessen"
+       }
+      ],
+      "mainCategoryPosition": 11.0,
+      "dimensions": {
+       "lengthCm": 23.600000381469727,
+       "widthCm": 6.099999904632568,
+       "heightCm": 5.599999904632568,
+       "weightGrams": 108.0,
+       "packageType": "Pakket S"
+      },
+      "lvbPossible": true,
+      "commission": [
+       {
+        "priceBelow": 10.0,
+        "fixed": 0.3,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": 20.0,
+        "fixed": 0.54,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": 100.0,
+        "fixed": 1.15,
+        "percentage": 13.0
+       },
+       {
+        "priceBelow": null,
+        "fixed": 1.15,
+        "percentage": 13.0
+       }
+      ],
+      "markets": {
+       "NL": {
+        "price": 14.95,
+        "sales": 687.0,
+        "revenue": 10270.65,
+        "impressions": 5581.0,
+        "sellerCount": 1,
+        "searchTermCount": 12.0,
+        "deliveryDays": 1.16
+       },
+       "BE": {
+        "price": 14.95,
+        "sales": 151.0,
+        "revenue": 2257.45,
+        "impressions": 2008.0,
+        "sellerCount": 1,
+        "searchTermCount": 7.0,
+        "deliveryDays": 1.16
+       }
+      }
+     }
+    ]
+   }
+  },
+  "research/products/{product_code}/keywords/": {
+   "query": {
+    "pageSize": 3,
+    "market": "ALL",
+    "period": "30d"
+   },
+   "response": {
+    "market": "ALL",
+    "period": "30d",
+    "pagination": {
+     "page": 1,
+     "pageSize": 3,
+     "total": 3,
+     "hasNext": false
+    },
+    "data": [
+     {
+      "keywordId": "5150",
+      "keyword": "duurzaam",
+      "markets": {
+       "NL": {
+        "searchVolume": null,
+        "position": null
+       },
+       "BE": {
+        "searchVolume": 6.0,
+        "position": 91.0
+       }
+      }
+     },
+     {
+      "keywordId": "6797",
+      "keyword": "drinkfles",
+      "markets": {
+       "NL": {
+        "searchVolume": 6286.0,
+        "position": 84.0
+       },
+       "BE": {
+        "searchVolume": 2332.0,
+        "position": 10.0
+       }
+      }
+     },
+     {
+      "keywordId": "6800",
+      "keyword": "drinkfles volwassenen",
+      "markets": {
+       "NL": {
+        "searchVolume": null,
+        "position": null
+       },
+       "BE": {
+        "searchVolume": 21.0,
+        "position": 30.0
+       }
+      }
+     }
+    ]
+   }
+  },
+  "research/products/{product_code}/sellers/": {
+   "query": {
+    "market": "ALL",
+    "period": "90d"
+   },
+   "response": {
+    "market": "ALL",
+    "period": "90d",
+    "hasMore": false,
+    "markets": {
+     "NL": {
+      "buyBoxSellerCount": 2,
+      "buyBoxTakeovers": 6,
+      "averageHoursInBuyBox": 139.2
+     },
+     "BE": {
+      "buyBoxSellerCount": 2,
+      "buyBoxTakeovers": 6,
+      "averageHoursInBuyBox": 139.2
+     }
+    },
+    "listingChanges": {
+     "mainImage": 0,
+     "title": 0,
+     "description": 0
+    },
+    "data": [
+     {
+      "sellerCode": "0",
+      "name": "bol.com",
+      "rating": null,
+      "markets": {
+       "NL": {
+        "buyBoxShare": 87.42100224829716,
+        "averagePrice": 22.540434829385095,
+        "deliveryDays": 1.14
+       },
+       "BE": {
+        "buyBoxShare": 87.91431232705406,
+        "averagePrice": 22.54364821284007,
+        "deliveryDays": 1.14
+       }
+      }
+     },
+     {
+      "sellerCode": "1049215",
+      "name": "Kambukka",
+      "rating": 9.0,
+      "markets": {
+       "NL": {
+        "buyBoxShare": 12.578997751702852,
+        "averagePrice": 26.949999999999996,
+        "deliveryDays": 3.0
+       },
+       "BE": {
+        "buyBoxShare": 12.085687672945934,
+        "averagePrice": 26.949999999999996,
+        "deliveryDays": 3.0
+       }
+      }
+     }
+    ]
+   }
+  },
+  "research/products/{product_code}/sales-history/": {
+   "query": {
+    "market": "ALL",
+    "period": "3M",
+    "interval": "month"
+   },
+   "response": {
+    "market": "ALL",
+    "period": "3M",
+    "interval": "month",
+    "data": [
+     {
+      "date": "2026-08-01",
+      "markets": {
+       "NL": {
+        "sales": 706.0,
+        "revenue": 16898.65,
+        "price": 24.040747591633593
+       },
+       "BE": {
+        "sales": 389.0,
+        "revenue": 10037.4,
+        "price": 23.991675355291
+       }
+      }
+     },
+     {
+      "date": "2026-09-01",
+      "markets": {
+       "NL": {
+        "sales": 265.0,
+        "revenue": 6069.489999999999,
+        "price": 22.517142857142854
+       },
+       "BE": {
+        "sales": 669.0,
+        "revenue": 15270.669999999998,
+        "price": 22.519642857142856
+       }
+      }
+     },
+     {
+      "date": "2026-10-01",
+      "markets": {
+       "NL": {
+        "sales": 114.0,
+        "revenue": 2616.299999999999,
+        "price": 22.950000000000003
+       },
+       "BE": {
+        "sales": 35.0,
+        "revenue": 803.2500000000001,
+        "price": 22.95
+       }
+      }
+     }
+    ]
+   }
+  },
+  "research/products/{product_code}/visibility-history/": {
+   "query": {
+    "market": "ALL",
+    "period": "3M",
+    "interval": "month"
+   },
+   "response": {
+    "market": "ALL",
+    "period": "3M",
+    "interval": "month",
+    "data": [
+     {
+      "date": "2026-08-01",
+      "markets": {
+       "NL": {
+        "categoryImpressions": 4005.0,
+        "keywordImpressions": 2309.0
+       },
+       "BE": {
+        "categoryImpressions": 3239.0,
+        "keywordImpressions": 3358.0
+       }
+      }
+     },
+     {
+      "date": "2026-09-01",
+      "markets": {
+       "NL": {
+        "categoryImpressions": 1590.0,
+        "keywordImpressions": 1594.0
+       },
+       "BE": {
+        "categoryImpressions": 1074.0,
+        "keywordImpressions": 2125.0
+       }
+      }
+     },
+     {
+      "date": "2026-10-01",
+      "markets": {
+       "NL": {
+        "categoryImpressions": 998.0,
+        "keywordImpressions": 1197.0
+       },
+       "BE": {
+        "categoryImpressions": 463.0,
+        "keywordImpressions": 1226.0
+       }
+      }
+     }
+    ]
+   }
+  },
+  "research/products/{product_code}/category-rankings/": {
+   "query": {
+    "market": "ALL",
+    "period": "3M",
+    "interval": "month"
+   },
+   "response": {
+    "market": "ALL",
+    "period": "3M",
+    "interval": "month",
+    "data": [
+     {
+      "categoryId": 11764,
+      "history": [
+       {
+        "date": "2026-08-01",
+        "positions": {
+         "NL": 601.0714285714286,
+         "BE": 84.53571428571429
+        }
+       },
+       {
+        "date": "2026-09-01",
+        "positions": {
+         "NL": 203.8,
+         "BE": 10.451612903225806
+        }
+       },
+       {
+        "date": "2026-10-01",
+        "positions": {
+         "NL": 533.375,
+         "BE": 34.0625
+        }
+       }
+      ]
+     },
+     {
+      "categoryId": 15270,
+      "history": [
+       {
+        "date": "2026-08-01",
+        "positions": {
+         "NL": 502.92857142857144,
+         "BE": 120.35714285714286
+        }
+       },
+       {
+        "date": "2026-09-01",
+        "positions": {
+         "NL": 114.6,
+         "BE": 9.03225806451613
+        }
+       },
+       {
+        "date": "2026-10-01",
+        "positions": {
+         "NL": 237.4375,
+         "BE": 20.15625
+        }
+       }
+      ]
+     },
+     {
+      "categoryId": 15296,
+      "history": [
+       {
+        "date": "2026-08-01",
+        "positions": {
+         "NL": 90.41176470588235,
+         "BE": 24.294117647058822
+        }
+       },
+       {
+        "date": "2026-09-01",
+        "positions": {
+         "NL": 35.827586206896555,
+         "BE": 7.758620689655173
+        }
+       },
+       {
+        "date": "2026-10-01",
+        "positions": {
+         "NL": 53.05263157894737,
+         "BE": 9.578947368421053
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "research/products/{product_code}/keyword-rankings/": {
+   "query": {
+    "market": "ALL",
+    "period": "3M",
+    "interval": "month",
+    "keywordIds": "6797,6800,5150"
+   },
+   "response": {
+    "market": "ALL",
+    "period": "3M",
+    "interval": "month",
+    "data": [
+     {
+      "keywordId": "6797",
+      "keyword": "drinkfles",
+      "history": [
+       {
+        "date": "2026-08-01",
+        "positions": {
+         "NL": 80.7,
+         "BE": 21.210526315789473
+        }
+       },
+       {
+        "date": "2026-09-01",
+        "positions": {
+         "NL": 36.608695652173914,
+         "BE": 5.260869565217392
+        }
+       },
+       {
+        "date": "2026-10-01",
+        "positions": {
+         "NL": 47.074074074074076,
+         "BE": 5.185185185185185
+        }
+       }
+      ]
+     },
+     {
+      "keywordId": "6800",
+      "keyword": "drinkfles volwassenen",
+      "history": [
+       {
+        "date": "2026-08-01",
+        "positions": {
+         "NL": 74.44444444444444,
+         "BE": 56.35
+        }
+       },
+       {
+        "date": "2026-09-01",
+        "positions": {
+         "NL": 90.75,
+         "BE": 20.869565217391305
+        }
+       },
+       {
+        "date": "2026-10-01",
+        "positions": {
+         "NL": 95.33333333333333,
+         "BE": 32.18518518518518
+        }
+       }
+      ]
+     },
+     {
+      "keywordId": "5150",
+      "keyword": "duurzaam",
+      "history": [
+       {
+        "date": "2026-08-01",
+        "positions": {
+         "NL": null,
+         "BE": 85.125
+        }
+       },
+       {
+        "date": "2026-09-01",
+        "positions": {
+         "NL": null,
+         "BE": 91.0
+        }
+       },
+       {
+        "date": "2026-10-01",
+        "positions": {
+         "NL": null,
+         "BE": null
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "research/products/{product_code}/reviews/": {
+   "query": {
+    "pageSize": 3,
+    "market": "ALL",
+    "period": "3M",
+    "verified": true
+   },
+   "response": {
+    "market": "ALL",
+    "period": "3M",
+    "pagination": {
+     "page": 1,
+     "pageSize": 3,
+     "total": 3,
+     "hasNext": false
+    },
+    "data": [
+     {
+      "reviewId": "8ee5a26102672e9a39159d8aa1643a74",
+      "productCode": "9300000138905030",
+      "rating": 5,
+      "title": null,
+      "text": "Goeie kwaliteit.  Lekt niet.",
+      "date": "2026-11-08T00:00:00",
+      "verifiedPurchase": true,
+      "helpfulVotes": 0
+     },
+     {
+      "reviewId": "7f3facf519b4b593b6f4c0611725c09b",
+      "productCode": "9300000022650450",
+      "rating": 5,
+      "title": null,
+      "text": "Mijn vijfde Kambukka-fles. Echt een aanrader!",
+      "date": "2026-11-06T00:00:00",
+      "verifiedPurchase": true,
+      "helpfulVotes": 0
+     },
+     {
+      "reviewId": "25334a9aba0a24db6ae20cbb5fe59b99",
+      "productCode": "9300000022650450",
+      "rating": 5,
+      "title": null,
+      "text": "goede drinkbus",
+      "date": "2026-11-05T00:00:00",
+      "verifiedPurchase": true,
+      "helpfulVotes": 0
+     }
+    ]
+   }
+  },
+  "research/niches/{niche_id}/reviews/": {
+   "query": {
+    "pageSize": 3,
+    "market": "ALL",
+    "period": "3M",
+    "verified": true
+   },
+   "response": {
+    "market": "ALL",
+    "period": "3M",
+    "pagination": {
+     "page": 1,
+     "pageSize": 3,
+     "total": 3,
+     "hasNext": false
+    },
+    "data": [
+     {
+      "reviewId": "b30e6f27d7759ad3412984dcd6364f44",
+      "productCode": "9300000004642525",
+      "rating": 5,
+      "title": null,
+      "text": "Isoleert goed. Dop sluit erg goed en gemakkelijk af (niet te vast draaien, is niet nodig). Een koffiefilter past goed op de fles maar door de smalle diameter valt hij vrij makkelijk eraf. Voorzichtig dus.",
+      "date": "2026-11-11T00:00:00",
+      "verifiedPurchase": true,
+      "helpfulVotes": 0
+     },
+     {
+      "reviewId": "58c9693124253c517a47891c9f8a68f9",
+      "productCode": "9300000042381335",
+      "rating": 5,
+      "title": null,
+      "text": "ideaal houd warm en koud",
+      "date": "2026-11-11T00:00:00",
+      "verifiedPurchase": true,
+      "helpfulVotes": 0
+     },
+     {
+      "reviewId": "e71cc80f8f73050b9457980c2f2088b2",
+      "productCode": "9300000227089632",
+      "rating": 5,
+      "title": null,
+      "text": "Fijne drinkfles en ook fijn dat ie in de vaatwasser kan, lekt niet.",
+      "date": "2026-11-11T00:00:00",
+      "verifiedPurchase": true,
+      "helpfulVotes": 0
+     }
+    ]
+   }
+  },
+  "research/niches/{niche_id}/reviews/summary/": {
+   "query": {},
+   "response": {
+    "market": "ALL",
+    "data": {
+     "averageRating": 4.32129611555729,
+     "reviewCount": 10246,
+     "ratings": [
+      {
+       "rating": 5,
+       "count": 7231
+      },
+      {
+       "rating": 4,
+       "count": 1207
+      },
+      {
+       "rating": 3,
+       "count": 529
+      },
+      {
+       "rating": 2,
+       "count": 427
+      },
+      {
+       "rating": 1,
+       "count": 852
+      }
+     ],
+     "positiveTopics": [
+      {
+       "topic": "Goede kwaliteit",
+       "count": 5861
+      },
+      {
+       "topic": "Handig in gebruik",
+       "count": 5488
+      },
+      {
+       "topic": "Voldoet aan verwachting",
+       "count": 5034
+      }
+     ],
+     "negativeTopics": [
+      {
+       "topic": "Voldoet niet aan verwachting",
+       "count": 805
+      },
+      {
+       "topic": "Slechte kwaliteit",
+       "count": 492
+      },
+      {
+       "topic": "Niet gebruiksvriendelijk",
+       "count": 257
+      }
+     ]
+    }
+   }
+  },
+  "research/products/{product_code}/reviews/summary/": {
+   "query": {},
+   "response": {
+    "market": "ALL",
+    "data": {
+     "averageRating": 4.253521126760563,
+     "reviewCount": 71,
+     "ratings": [
+      {
+       "rating": 5,
+       "count": 50
+      },
+      {
+       "rating": 4,
+       "count": 6
+      },
+      {
+       "rating": 3,
+       "count": 4
+      },
+      {
+       "rating": 2,
+       "count": 5
+      },
+      {
+       "rating": 1,
+       "count": 6
+      }
+     ],
+     "positiveTopics": [
+      {
+       "topic": "Handig in gebruik",
+       "count": 37
+      },
+      {
+       "topic": "Goede kwaliteit",
+       "count": 34
+      },
+      {
+       "topic": "Voldoet aan verwachting",
+       "count": 23
+      }
+     ],
+     "negativeTopics": [
+      {
+       "topic": "Slechte kwaliteit",
+       "count": 7
+      },
+      {
+       "topic": "Voldoet niet aan verwachting",
+       "count": 4
+      },
+      {
+       "topic": "geen",
+       "count": 2
+      }
+     ]
+    }
+   }
+  },
+  "research/niches/{niche_id}/review-history/": {
+   "query": {
+    "market": "ALL",
+    "period": "3M",
+    "interval": "month"
+   },
+   "response": {
+    "market": "ALL",
+    "period": "3M",
+    "interval": "month",
+    "data": {
+     "reviews": [
+      {
+       "date": "2026-08-01",
+       "reviewCount": 318,
+       "averageRating": 4.30188679245283
+      },
+      {
+       "date": "2026-09-01",
+       "reviewCount": 248,
+       "averageRating": 4.056451612903226
+      },
+      {
+       "date": "2026-10-01",
+       "reviewCount": 257,
+       "averageRating": 4.311284046692607
+      }
+     ]
+    }
+   }
+  },
+  "organizations/": {
+   "query": {},
+   "response": [
+    {
+     "id": 42,
+     "name": "Voorbeeldwinkel BV"
+    }
+   ]
+  },
+  "usage/": {
+   "query": {},
+   "response": {
+    "organization": {
+     "id": 42,
+     "name": "Voorbeeldwinkel BV"
+    },
+    "credential": "oauth",
+    "plan": "bundle",
+    "bundle": {
+     "includedRequests": 1000,
+     "usedRequests": 312,
+     "remainingRequests": 688,
+     "additionalRequests": 0,
+     "additionalRequestsLimitAmount": 0,
+     "periodStart": "2026-09-12T08:00:00Z",
+     "periodEnd": "2026-10-12T08:00:00Z"
+    },
+    "freeTier": {
+     "eligible": true,
+     "limit": 100,
+     "used": 0,
+     "remaining": 100,
+     "pageSize": 10,
+     "resetsAt": "2026-10-01T00:00:00Z"
+    }
+   }
+  },
+  "store/overview/": {
+   "query": {},
+   "response": {
+    "period": {
+     "startDate": "2026-08-23",
+     "endDate": "2026-09-21",
+     "days": 30,
+     "requestedDays": 30,
+     "daysCapped": false,
+     "maxDays": 365
+    },
+    "previousPeriod": {
+     "startDate": "2026-07-24",
+     "endDate": "2026-08-22",
+     "days": 30
+    },
+    "filters": {
+     "country": null
+    },
+    "kpis": {
+     "revenue": 12000.0,
+     "netRevenue": 9600.0,
+     "costs": 6000.0,
+     "profit": 3600.0,
+     "orders": 240,
+     "sales": 300,
+     "returns": 12,
+     "adCosts": 1080.0,
+     "storeTacos": 9.0
+    },
+    "previous": {
+     "revenue": 10000.0,
+     "netRevenue": 8000.0,
+     "costs": 5000.0,
+     "profit": 3000.0,
+     "orders": 200,
+     "sales": 250,
+     "returns": 10
+    },
+    "change": {
+     "revenue": 2000.0,
+     "netRevenue": 1600.0,
+     "costs": 1000.0,
+     "profit": 600.0,
+     "orders": 40,
+     "sales": 50,
+     "returns": 2
+    },
+    "changePct": {
+     "revenue": 20.0,
+     "netRevenue": 20.0,
+     "costs": 20.0,
+     "profit": 20.0,
+     "orders": 20.0,
+     "sales": 20.0,
+     "returns": 20.0
+    },
+    "asOf": "2026-09-22T08:00:00Z"
+   }
+  },
+  "store/products/": {
+   "query": {},
+   "response": {
+    "period": {
+     "startDate": "2026-08-23",
+     "endDate": "2026-09-21",
+     "days": 30
+    },
+    "filters": {
+     "country": null,
+     "eans": null,
+     "categoryId": null
+    },
+    "data": [
+     {
+      "title": "Voorbeeld drinkfles 750 ml",
+      "ean": "8712345678906",
+      "inSelectedStore": true,
+      "image": null,
+      "reviewScore": 4.5,
+      "reviewCount": 120,
+      "productLink": null,
+      "productCode": "9300000000001",
+      "sales": 120.0,
+      "orders": 110.0,
+      "revenue": 2400.0,
+      "netRevenue": 2400.0,
+      "commission": 300.0,
+      "totalCosts": 1500.0,
+      "salesCosts": 1350.0,
+      "salesCostsBreakdown": {
+       "shippingCosts": 250.0,
+       "surcharge": 0.0,
+       "productCosts": 800.0,
+       "surchargeRefunds": 0.0,
+       "shippingLabelRefunds": 0.0,
+       "commission": 300.0,
+       "commissionCorrection": 0.0,
+       "compensation": 0.0
+      },
+      "salesProfits": 1050.0,
+      "salesProfitMargin": 43.75,
+      "salesRoi": 77.78,
+      "returns": 4.0,
+      "returnCosts": 30.0,
+      "returnCostsBreakdown": {
+       "otherReturnCosts": 10.0,
+       "returnLabelCost": 20.0,
+       "productLostLeniency": 0.0,
+       "otherCompensation": 0.0,
+       "commissionCorrection": 0.0,
+       "revenueCorrection": 0.0,
+       "shipAdditionalProducts": 0.0,
+       "productsBackInStockCorrection": 0.0
+      },
+      "totalProfits": 900.0,
+      "totalMargin": 37.5,
+      "totalRoi": 60.0,
+      "clicks": 2200.0,
+      "conversion": 5.0,
+      "conversionBenchmark": null,
+      "adCost": 100.0,
+      "acos": 8.33,
+      "tacos": 4.17,
+      "isActive": true,
+      "storageCosts": 15.0,
+      "gradedStorageCosts": 5.0,
+      "hasProductCosts": true
+     }
+    ],
+    "pagination": {
+     "page": 1,
+     "pageSize": 25,
+     "total": 1,
+     "hasNext": false,
+     "totalMayBeCapped": false
+    },
+    "costsVisible": true,
+    "asOf": "2026-09-22T08:00:00Z"
+   }
+  },
+  "store/inventory/": {
+   "query": {},
+   "response": {
+    "filters": {
+     "ean": null,
+     "stockState": null
+    },
+    "data": [
+     {
+      "ean": "8712345678906",
+      "title": "Voorbeeld drinkfles 750 ml",
+      "stock": 42,
+      "stockState": "ok",
+      "source": "fbb_regular",
+      "stockLastUpdated": "2026-09-22T06:30:00Z",
+      "unknownReason": null
+     },
+     {
+      "ean": "8712345678913",
+      "title": "Voorbeeld drinkfles 500 ml",
+      "stock": null,
+      "stockState": "unknown",
+      "source": null,
+      "stockLastUpdated": "2026-09-18T06:30:00Z",
+      "unknownReason": "stale_stock"
+     }
+    ],
+    "pagination": {
+     "page": 1,
+     "pageSize": 25,
+     "total": 2,
+     "hasNext": false
+    },
+    "counts": {
+     "resolved": 2,
+     "outOfStock": 0,
+     "low": 0,
+     "ok": 1,
+     "unknown": 1
+    },
+    "countsScope": "resolved_page",
+    "asOf": "2026-09-22T08:00:00Z"
+   }
+  },
+  "reference/categories/": {
+   "query": {},
+   "response": {
+    "data": [
+     {
+      "categoryId": 11764,
+      "name": "Koken & Tafelen",
+      "level": 1,
+      "parentId": null,
+      "path": [
+       {
+        "categoryId": 11764,
+        "name": "Koken & Tafelen"
+       }
+      ],
+      "childCount": 16
+     },
+     {
+      "categoryId": 21822,
+      "name": "Waterfilters & Drinkflessen",
+      "level": 2,
+      "parentId": 11764,
+      "path": [
+       {
+        "categoryId": 11764,
+        "name": "Koken & Tafelen"
+       },
+       {
+        "categoryId": 21822,
+        "name": "Waterfilters & Drinkflessen"
+       }
+      ],
+      "childCount": 5
+     },
+     {
+      "categoryId": 40142,
+      "name": "Drinkflessen",
+      "level": 3,
+      "parentId": 21822,
+      "path": [
+       {
+        "categoryId": 11764,
+        "name": "Koken & Tafelen"
+       },
+       {
+        "categoryId": 21822,
+        "name": "Waterfilters & Drinkflessen"
+       },
+       {
+        "categoryId": 40142,
+        "name": "Drinkflessen"
+       }
+      ],
+      "childCount": 0
+     }
+    ],
+    "pagination": {
+     "page": 1,
+     "pageSize": 3,
+     "total": 3,
+     "hasNext": false
+    }
+   }
+  },
+  "reference/categories/{category_id}/": {
+   "query": {},
+   "response": {
+    "data": {
+     "categoryId": 40142,
+     "name": "Drinkflessen",
+     "level": 3,
+     "parentId": 21822,
+     "path": [
+      {
+       "categoryId": 11764,
+       "name": "Koken & Tafelen"
+      },
+      {
+       "categoryId": 21822,
+       "name": "Waterfilters & Drinkflessen"
+      },
+      {
+       "categoryId": 40142,
+       "name": "Drinkflessen"
+      }
+     ],
+     "childCount": 0
+    }
+   }
+  },
+  "reference/brands/": {
+   "query": {},
+   "response": {
+    "data": [
+     {
+      "name": "Philips"
+     },
+     {
+      "name": "Philips Hue"
+     },
+     {
+      "name": "Philips Avent"
+     }
+    ],
+    "hasMore": true
+   }
+  }
+ }
+}
