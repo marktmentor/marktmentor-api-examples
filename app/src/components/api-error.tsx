@@ -1,4 +1,5 @@
 import { AlertCircleIcon } from "lucide-react"
+import { DemoExamples } from "@/components/demo-examples"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { useI18n } from "@/i18n"
 import type { ApiFailure } from "@/lib/types"
@@ -32,6 +33,12 @@ export function ApiError({ error }: { error: ApiFailure }) {
       <AlertDescription>
         {codes[error.code] && <p>{codes[error.code]}</p>}
         {detail && <p className="text-xs text-muted-foreground">{detail}</p>}
+        {error.testKey && error.status === 404 && (
+          <div className="mt-1 flex flex-col gap-2 text-foreground">
+            <p>{m.demo.notFoundHint}</p>
+            <DemoExamples />
+          </div>
+        )}
         {error.errors && (
           <pre className="text-xs whitespace-pre-wrap text-muted-foreground">
             {JSON.stringify(error.errors, null, 1)}

@@ -76,6 +76,7 @@ export function StoreInventoryTab({
           <Input
             value={ean}
             onChange={(e) => setEan(e.target.value)}
+            aria-label={m.storeFilters.ean}
             placeholder={m.storeFilters.ean}
             inputMode="numeric"
             className="h-8 w-full sm:w-44"
@@ -112,8 +113,7 @@ export function StoreInventoryTab({
               out: num(d.counts.outOfStock),
               unknown: num(d.counts.unknown),
             })}
-            {d.countsScope &&
-              ` · ${(m.storeFilters.countsScope as Record<string, string | undefined>)[d.countsScope] ?? d.countsScope}`}
+            {` · ${(m.storeFilters.countsScope as Record<string, string | undefined>)[d.countsScope] ?? d.countsScope}`}
           </p>
           <Table>
             <TableHeader>
@@ -125,9 +125,9 @@ export function StoreInventoryTab({
             </TableHeader>
             <TableBody>
               {d.data.map((row) => {
-                const state = (
+                // A state that a newer API version adds shows as unknown.
+                const state =
                   row.stockState in VARIANT ? row.stockState : "unknown"
-                ) as keyof typeof VARIANT
                 return (
                   <TableRow key={row.ean}>
                     <TableCell className="max-w-[12rem] sm:max-w-md">
@@ -155,6 +155,7 @@ export function StoreInventoryTab({
             </TableBody>
           </Table>
           <Pager
+            free
             pagination={d.pagination}
             onPage={(page) => onQuery({ ...query, page })}
           />

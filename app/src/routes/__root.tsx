@@ -6,6 +6,7 @@ import {
 } from "@tanstack/react-router"
 import { FlaskConicalIcon } from "lucide-react"
 import { AppSidebar } from "@/components/app-sidebar"
+import { DemoExamples } from "@/components/demo-examples"
 import { SiteHeader } from "@/components/site-header"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
@@ -110,7 +111,11 @@ function DemoAlert() {
     <Alert>
       <FlaskConicalIcon />
       <AlertTitle>{m.demo.title}</AlertTitle>
-      <AlertDescription>{m.demo.body}</AlertDescription>
+      <AlertDescription>
+        <p>{m.demo.body}</p>
+        <DemoExamples />
+        <p className="text-xs">{m.demo.ownData}</p>
+      </AlertDescription>
     </Alert>
   )
 }

@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { BrandPicker } from "@/components/filters/brand-picker"
 import { CategoryPicker } from "@/components/filters/category-picker"
@@ -12,6 +13,16 @@ import {
   allMarketsOnly,
 } from "@/lib/filters"
 
+type RangeParam = (typeof RANGES)[RangeKey][number]
+const PARAMS: RangeParam[] = Object.values(RANGES).flat()
+
+/** "4,5" and "4.5" -> 4.5; empty, negative or not a number -> not set. */
+function parse(raw: string | undefined) {
+  const text = (raw ?? "").trim().replace(",", ".")
+  const n = Number(text)
+  return text === "" || !Number.isFinite(n) || n < 0 ? undefined : n
+}
+
 /** The filters behind "More filters": brand, category and the ranges. */
 export function MoreFilters({
   draft,
@@ -25,7 +36,27 @@ export function MoreFilters({
   onApply: () => void
 }) {
   const { m } = useI18n()
-  const num = (v: string) => (v === "" ? undefined : Number(v))
+  // The fields keep what the user types ("4." or "4,5"); the draft gets the
+  // parsed number, or nothing when the text is not a valid number.
+  const [raw, setRaw] = useState<Partial<Record<RangeParam, string>>>(() =>
+    Object.fromEntries(PARAMS.map((p) => [p, draft[p]?.toString() ?? ""]))
+  )
+  useEffect(() => {
+    // Follow outside changes (for example a cleared filter).
+    setRaw((r) => {
+      const stale = PARAMS.filter((p) => parse(r[p]) !== draft[p])
+      if (stale.length === 0) return r
+      const next = { ...r }
+      for (const p of stale) next[p] = draft[p]?.toString() ?? ""
+      return next
+    })
+  }, [draft])
+  const change = (param: RangeParam, text: string) => {
+    setRaw((r) => ({ ...r, [param]: text }))
+    set({ [param]: parse(text) })
+  }
+  const invalid = (param: RangeParam) =>
+    !!raw[param]?.trim() && parse(raw[param]) === undefined
   return (
     <div className="flex flex-col gap-4">
       <div className="grid grid-cols-2 gap-3">
@@ -63,16 +94,18 @@ export function MoreFilters({
               inputMode="decimal"
               placeholder={m.filters.min}
               disabled={off}
-              value={draft[min] ?? ""}
-              onChange={(e) => set({ [min]: num(e.target.value) })}
+              value={raw[min] ?? ""}
+              aria-invalid={invalid(min)}
+              onChange={(e) => change(min, e.target.value)}
             />
             <Input
               aria-label={`${m.filters.ranges[key]} ${m.filters.max}`}
               inputMode="decimal"
               placeholder={m.filters.max}
               disabled={off}
-              value={draft[max] ?? ""}
-              onChange={(e) => set({ [max]: num(e.target.value) })}
+              value={raw[max] ?? ""}
+              aria-invalid={invalid(max)}
+              onChange={(e) => change(max, e.target.value)}
             />
           </div>
         )

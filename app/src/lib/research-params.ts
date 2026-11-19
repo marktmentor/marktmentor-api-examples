@@ -8,7 +8,7 @@ export type KeywordPeriod = (typeof KEYWORD_PERIODS)[number]
 export const SELLER_PERIODS = ["90d", "180d", "365d", "730d"] as const
 export type SellerPeriod = (typeof SELLER_PERIODS)[number]
 
-export type HistoryPeriod = "3M" | "6M" | "1Y" | "2Y"
+export type HistoryPeriod = (typeof PERIODS)[number]
 
 export type Interval = (typeof INTERVALS)[number]
 

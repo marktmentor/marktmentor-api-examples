@@ -23,7 +23,7 @@ export async function loadProductTab(code: string, s: ProductSearch) {
       return {
         kind: "sales" as const,
         result: await getSalesHistory({
-          data: { productCode: code, period, interval, market },
+          data: { code, period, interval, market },
         }),
       }
     case "visibility":

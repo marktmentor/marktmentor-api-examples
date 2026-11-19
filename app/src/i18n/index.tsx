@@ -14,6 +14,12 @@ export const LOCALES: Record<
   nl: { label: "Nederlands", intl: "nl-NL", messages: nl },
 }
 export const LOCALE_COOKIE = "lang"
+/**
+ * Clock times (request log, cache age) show in Amsterdam time, the time zone of
+ * the bol data day. A fixed zone gives the same text on the server and in the
+ * browser, so hydration does not fail. Calendar days (date, month) use UTC.
+ */
+const TIME_ZONE = "Europe/Amsterdam"
 
 /** The first supported language in an Accept-Language header. */
 export function pickLocale(
@@ -85,6 +91,17 @@ function makeI18n(locale: Locale) {
         ? new Date(v).toLocaleString(intl, {
             dateStyle: "medium",
             timeStyle: "short",
+            timeZone: TIME_ZONE,
+          })
+        : none,
+    /** 14:05:09 */
+    time: (v: string | null | undefined) =>
+      v
+        ? new Date(v).toLocaleTimeString(intl, {
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            timeZone: TIME_ZONE,
           })
         : none,
   }

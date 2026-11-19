@@ -66,8 +66,11 @@ function UsagePage() {
 
   const clear = async () => {
     setBusy("clear")
-    await clearLocalData()
-    setBusy(null)
+    try {
+      await clearLocalData()
+    } finally {
+      setBusy(null)
+    }
     toast.success(m.overview.cleared)
     await router.invalidate()
   }

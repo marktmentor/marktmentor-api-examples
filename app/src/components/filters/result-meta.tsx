@@ -13,10 +13,13 @@ export function ResultMeta({
   total,
   size,
   onSize,
+  sizeDisabled = false,
 }: {
   total: number | null
   size: number
   onSize: (n: number) => void
+  /** Demo mode with one example: the page size changes nothing. */
+  sizeDisabled?: boolean
 }) {
   const { m, fill, num } = useI18n()
   return (
@@ -46,6 +49,7 @@ export function ResultMeta({
         }}
         onChange={(v) => onSize(Number(v))}
         className="w-36"
+        disabled={sizeDisabled}
       />
     </div>
   )

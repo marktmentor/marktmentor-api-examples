@@ -10,11 +10,9 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart"
 import { useI18n } from "@/i18n"
+import { marketValue } from "@/lib/markets"
 import type { HistoryPeriod, Interval } from "@/lib/research-params"
 import type { ApiResult, VisibilityHistory } from "@/lib/types"
-
-const sum = (...v: (number | null | undefined)[]) =>
-  v.every((x) => x == null) ? null : v.reduce<number>((a, x) => a + (x ?? 0), 0)
 
 /** GET research/products/{code}/visibility-history/ */
 export function VisibilityTab({
@@ -57,14 +55,8 @@ export function VisibilityTab({
             accessibilityLayer
             data={d.data.map((p) => ({
               date: p.date,
-              category: sum(
-                p.markets.NL?.categoryImpressions,
-                p.markets.BE?.categoryImpressions
-              ),
-              keyword: sum(
-                p.markets.NL?.keywordImpressions,
-                p.markets.BE?.keywordImpressions
-              ),
+              category: marketValue(p.markets, "categoryImpressions"),
+              keyword: marketValue(p.markets, "keywordImpressions"),
             }))}
           >
             <CartesianGrid vertical={false} />

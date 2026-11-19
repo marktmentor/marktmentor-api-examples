@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { CategoryPicker } from "@/components/filters/category-picker"
 import { Input } from "@/components/ui/input"
+import { useDemo } from "@/hooks/use-demo"
 import { useI18n } from "@/i18n"
 import {
   LIST_PERIODS,
@@ -24,6 +25,8 @@ export function NicheFilterBar({
   onApply: (next: NicheFilters) => void
 }) {
   const { m, fill } = useI18n()
+  // The test key has one example niche: sorting cannot change the list.
+  const demo = useDemo()
   const [draft, setDraft] = useState<NicheFilters>(value)
   useEffect(() => setDraft(value), [value])
   const market = draft.market ?? "ALL"
@@ -96,6 +99,7 @@ export function NicheFilterBar({
             labels={m.filters.nicheSorts}
             onChange={(s) => now({ sort: s === "-volume" ? undefined : s })}
             className="w-56"
+            disabled={demo}
           />
           <Button type="submit" size="sm" className="sm:ml-auto">
             <SearchIcon />
@@ -115,6 +119,9 @@ export function NicheFilterBar({
           <CoinsIcon className="size-3.5" />
           {m.filters.cost} {m.filters.categoryHelp}
         </p>
+        {demo && (
+          <p className="text-xs text-muted-foreground">{m.demo.oneNiche}</p>
+        )}
       </CardContent>
     </Card>
   )

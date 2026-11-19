@@ -7,7 +7,7 @@ export function ProductDetailsCard({ product: p }: { product: Product }) {
   const { m, fill, num, dec, date, price } = useI18n()
   const d = p.dimensions
   const size =
-    d && d.lengthCm != null && d.widthCm != null && d.heightCm != null
+    d.lengthCm != null && d.widthCm != null && d.heightCm != null
       ? `${dec(d.lengthCm)} × ${dec(d.widthCm)} × ${dec(d.heightCm)} cm`
       : m.common.none
   const rows: [string, React.ReactNode][] = [
@@ -30,9 +30,9 @@ export function ProductDetailsCard({ product: p }: { product: Product }) {
     [m.details.dimensions, size],
     [
       m.details.weight,
-      d?.weightGrams != null ? `${num(d.weightGrams)} g` : m.common.none,
+      d.weightGrams != null ? `${num(d.weightGrams)} g` : m.common.none,
     ],
-    [m.details.package, d?.packageType ?? m.common.none],
+    [m.details.package, d.packageType ?? m.common.none],
     [
       m.details.commission,
       <ul key="c" className="flex flex-col gap-0.5">

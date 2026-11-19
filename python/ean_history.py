@@ -13,7 +13,8 @@ again with the product code you want (`--code`).
 import argparse
 import csv
 
-from marktmentor import ApiError, MarktMentor, csv_safe, run
+from common import CSV_ENCODING, as_dict, connect, csv_safe, error_body, run
+from marktmentor.errors import ConflictError, NotFoundError
 
 
 def main() -> None:
@@ -38,51 +39,41 @@ def main() -> None:
     if not items:
         parser.error("give one or more EANs, or --code")
 
-    api = MarktMentor()
-    usage = api.load_usage()
+    client, allowance = connect()
+    usage = allowance.load(client)
     if args.dry_run:
         print(f"Dry run: {len(items)} item(s) x 1 = {len(items)} research requests.")
-        print(f"Research plan: {usage.get('plan')}; {api.usage.summary()}")
+        print(f"Research plan: {usage.plan}; {allowance.summary()}")
         return
 
     columns = ["ean", "productCode", "date", "market", "sales", "revenue", "price"]
-    with open(args.out, "w", newline="", encoding="utf-8") as handle:
+    with open(args.out, "w", newline="", encoding=CSV_ENCODING) as handle:
         writer = csv.DictWriter(handle, fieldnames=columns)
         writer.writeheader()
         for kind, value in items:
             path = f"ean:{value}" if kind == "ean" else value
             try:
-                history = api.get(
-                    f"research/products/{path}/sales-history/",
-                    {"market": "ALL", "period": args.period, "interval": args.interval},
+                history = client.products.sales_history(
+                    path, market="ALL", period=args.period, interval=args.interval
                 )
-            except ApiError as error:
-                if error.status == 409 and error.code == "ambiguous_ean":
-                    print(
-                        f"{value}: more than one product has this EAN "
-                        "(not counted). Choose one:"
-                    )
-                    for candidate in (error.body or {}).get("candidates", []):
-                        print(
-                            f"  --code {candidate['productCode']}  "
-                            f"{candidate.get('title')}"
-                        )
-                    continue
-                if error.status == 404 and error.code in (
-                    "product_not_found",
-                    "not_found",
-                ):
-                    print(f"{value}: no product or no history found (not counted)")
-                    continue
-                raise
-            for point in history["data"]:
-                for market, metrics in (point.get("markets") or {}).items():
+            except ConflictError as error:  # ambiguous_ean
+                print(f"{value}: more than one product has this EAN (not counted).")
+                print("Choose one:")
+                for candidate in error_body(error).get("candidates", []):
+                    code, title = candidate["productCode"], candidate.get("title")
+                    print(f"  --code {code}  {title}")
+                continue
+            except NotFoundError:
+                print(f"{value}: no product or no history found (not counted)")
+                continue
+            for point in history.data:
+                for market, metrics in (as_dict(point).get("markets") or {}).items():
                     writer.writerow(
                         csv_safe(
                             {
                                 "ean": value if kind == "ean" else "",
                                 "productCode": value if kind == "code" else "",
-                                "date": point["date"],
+                                "date": point.date,
                                 "market": market,
                                 **{
                                     key: (metrics or {}).get(key)
@@ -91,9 +82,9 @@ def main() -> None:
                             }
                         )
                     )
-            print(f"{value}: {len(history['data'])} points")
+            print(f"{value}: {len(history.data)} points")
     print(f"\nWrote {args.out}")
-    print(api.usage.summary())
+    print(allowance.summary())
 
 
 if __name__ == "__main__":

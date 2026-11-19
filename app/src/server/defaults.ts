@@ -1,9 +1,9 @@
 import "@tanstack/react-start/server-only"
 
 import { dataDay } from "@/lib/data-day"
-import type { ApiResult, SkipReason, Usage } from "@/lib/types"
+import type { ApiResult, SkipReason } from "@/lib/types"
 import { allowanceExpired, refreshAllowance } from "./allowance"
-import { apiGet } from "./client"
+import { type Send, apiGet, getUsage } from "./client"
 import { getQuota } from "./limits"
 import { config } from "./config"
 import { getMeta, setMeta } from "./db"
@@ -29,7 +29,8 @@ const NO_ACCESS_CODES = new Set([
 /** Fetch a default list, unless we know it cannot or should not be fetched. */
 export async function defaultList<T>(
   path: string,
-  params: Record<string, unknown>
+  params: Record<string, unknown>,
+  send: Send
 ): Promise<DefaultList<T>> {
   const { mode, reserve } = config()
   const memo = `noResearch:${mode}`
@@ -43,7 +44,7 @@ export async function defaultList<T>(
   // Known stop (no access, or the reserve): check usage/ again first (free, at
   // most once a minute), because a new grant or bundle lifts the stop.
   if (noAccess() || atReserve() || allowanceExpired()) {
-    if (await refreshAllowance(() => apiGet<Usage>("usage/")))
+    if (await refreshAllowance(getUsage))
       if (getQuota()?.plan !== "none") setMeta(memo, null)
   }
   // No research access (known from usage/ or from a 403 today): do not ask again.
@@ -56,7 +57,7 @@ export async function defaultList<T>(
     }
   if (atReserve()) return { kind: "skipped", reason: "reserve" }
   // apiGet uses today's cached answer when there is one: no request.
-  const result = await apiGet<T>(path, params)
+  const result = await apiGet<T>(path, params, send)
   // No access (no paid Premium, or a failed renewal payment): do not ask again today.
   if (!result.ok && NO_ACCESS_CODES.has(result.code))
     setMeta(memo, { day: dataDay(), code: result.code })

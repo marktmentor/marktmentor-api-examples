@@ -5,18 +5,21 @@ import type { Product } from "./types"
 export function downloadCsv(
   filename: string,
   columns: string[],
-  rows: Record<string, unknown>[]
+  rows: readonly object[]
 ) {
   const cell = (v: unknown) => {
     if (v === null || v === undefined) return ""
-    // Text that starts with = + - @ gets a ' first, so a spreadsheet does not
-    // run a product title as a formula. Numbers stay as they are.
-    const t = typeof v === "string" && /^[=+\-@]/.test(v) ? `'${v}` : String(v)
+    // Text that starts with = + - @, a tab or CR gets a ' first, so a
+    // spreadsheet does not run a product title as a formula. Numbers stay.
+    const t =
+      typeof v === "string" && /^[=+\-@\t\r]/.test(v) ? `'${v}` : String(v)
     return /[",\r\n;]/.test(t) ? `"${t.replaceAll('"', '""')}"` : t
   }
   const csv = [
     columns.join(","),
-    ...rows.map((r) => columns.map((c) => cell(r[c])).join(",")),
+    ...rows.map((r) =>
+      columns.map((c) => cell((r as Record<string, unknown>)[c])).join(",")
+    ),
   ].join("\n")
   const url = URL.createObjectURL(
     new Blob([csv + "\n"], { type: "text/csv;charset=utf-8" })
@@ -61,15 +64,4 @@ export function flattenProduct(p: Product): Record<string, unknown> {
     "BE.revenue": p.markets.BE?.revenue,
     updatedAt: p.updatedAt,
   }
-}
-
-/** NL + BE together, or null when neither market has the value. */
-export function bothMarkets(
-  p: Pick<Product, "markets">,
-  key: "sales" | "revenue"
-): number | null {
-  const nl = p.markets.NL?.[key]
-  const be = p.markets.BE?.[key]
-  if (nl == null && be == null) return null
-  return (nl ?? 0) + (be ?? 0)
 }

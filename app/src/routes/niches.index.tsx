@@ -33,6 +33,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { useDemo } from "@/hooks/use-demo"
 import { useI18n } from "@/i18n"
 import {
   type NicheFilters,
@@ -40,7 +41,7 @@ import {
   parseNicheFilters,
 } from "@/lib/filters"
 import { defaultNiches, searchNiches } from "@/api/niches"
-import type { MarketMetrics, Niche } from "@/lib/types"
+import { marketValue } from "@/lib/markets"
 
 export const Route = createFileRoute("/niches/")({
   validateSearch: (s: Record<string, unknown>): NicheFilters =>
@@ -68,18 +69,12 @@ export const Route = createFileRoute("/niches/")({
   component: Niches,
 })
 
-function metric(n: Niche, key: keyof MarketMetrics, market: string) {
-  if (market !== "ALL") return n.markets[market as "NL" | "BE"]?.[key] ?? null
-  const nl = n.markets.NL?.[key]
-  const be = n.markets.BE?.[key]
-  return nl == null && be == null ? null : (nl ?? 0) + (be ?? 0)
-}
-
 function Niches() {
   const { result, skipped, isDefault } = Route.useLoaderData()
   const filters = Route.useSearch()
   const navigate = useNavigate({ from: Route.fullPath })
   const { m, num, eur, dec } = useI18n()
+  const demo = useDemo()
   const apply = (next: NicheFilters) => navigate({ search: next })
   const market = filters.market ?? "ALL"
   const label = m.filters.markets[market]
@@ -103,6 +98,7 @@ function Niches() {
               <ResultMeta
                 total={result.data.pagination.total}
                 size={filters.size ?? 25}
+                sizeDisabled={demo}
                 onSize={(n) =>
                   apply({
                     ...filters,
@@ -178,13 +174,13 @@ function Niches() {
                         </Link>
                       </TableCell>
                       <TableCell className="text-right tabular-nums">
-                        {num(metric(n, "searchVolume", market))}
+                        {num(marketValue(n.markets, "searchVolume", market))}
                       </TableCell>
                       <TableCell className="hidden text-right tabular-nums sm:table-cell">
-                        {num(metric(n, "sales", market))}
+                        {num(marketValue(n.markets, "sales", market))}
                       </TableCell>
                       <TableCell className="hidden text-right tabular-nums lg:table-cell">
-                        {eur(metric(n, "revenue", market))}
+                        {eur(marketValue(n.markets, "revenue", market))}
                       </TableCell>
                       <TableCell className="hidden text-right tabular-nums md:table-cell">
                         {num(n.productCount)}

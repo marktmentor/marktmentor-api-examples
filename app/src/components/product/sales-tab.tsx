@@ -64,6 +64,7 @@ export function SalesTab({
             size="sm"
             className="ml-auto"
             disabled={!rows.length}
+            aria-label={m.common.csv}
             onClick={() =>
               downloadCsv(
                 `sales-history-${ean}.csv`,

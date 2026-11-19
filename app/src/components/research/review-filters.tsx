@@ -102,6 +102,7 @@ export function ReviewFilters({
         <Input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          aria-label={m.reviews.searchPlaceholder}
           placeholder={m.reviews.searchPlaceholder}
           className="h-8 min-w-0"
         />

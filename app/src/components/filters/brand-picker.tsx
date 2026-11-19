@@ -42,7 +42,12 @@ export function BrandPicker({ value, onChange, id, className }: Props) {
   const q = useDebounced(search.trim())
 
   useEffect(() => {
-    if (!open || q.length < 2) return setRows([])
+    if (!open || q.length < 2) {
+      setRows([])
+      setMore(false)
+      setError(null)
+      return
+    }
     let cancelled = false
     setRows(null)
     void findBrands({ data: { search: q } }).then((r) => {

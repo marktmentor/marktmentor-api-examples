@@ -97,64 +97,142 @@ test("the router does not preload pages (each preload would spend research reque
   assert.match(router, /defaultPreload: false/)
 })
 
-describe("demo mode", () => {
-  let base
-  before(async () => {
-    base = await startApp({ MARKTMENTOR_DEMO: "1" })
-  })
-  test("every screen and every tab renders the sample data (English)", async () => {
-    const pages = {
-      "/": /Suggestions to follow/,
-      "/products": /Best-selling products/,
-      "/niches": /Niches with the highest search volume/,
-      "/usage": /Voorbeeldwinkel BV/,
-      "/products?q=drinkfles": /Kambukka Elton/,
-      "/products?q=drinkfles&market=NL&period=90d&minSales=10&brand=Kambukka":
-        /Brand: Kambukka/,
-      "/products/9300000138905032": /Sales history/,
-      "/products/9300000138905032?tab=visibility": /Visibility history/,
-      "/products/9300000138905032?tab=rankings": /Category rankings/,
-      "/products/9300000138905032?tab=keywords": /duurzaam/,
-      "/products/9300000138905032?tab=sellers": /bol\.com/,
-      "/products/9300000138905032?tab=reviews": /Review summary/,
-      "/products/9300000138905032?tab=variants": /Variants/,
-      "/products/9300000138905032?tab=snapshots": /Your snapshots/,
-      "/niches?q=drinkfles": /dopper drinkfles/,
-      "/niches/6797": /Products in this niche/,
-      "/niches/6797?tab=periods": /Compare periods/,
-      "/niches/6797?tab=distributions": /Product distribution/,
-      "/niches/6797?tab=reviews": /Review summary/,
-      "/niches/6797?tab=reviewHistory": /New reviews/,
-      "/store": /Voorbeeld drinkfles 750 ml/,
-      "/store?tab=stock": /stale_stock/,
-    }
-    for (const [path, expected] of Object.entries(pages)) {
-      assert.match(await page(base, path), /Demo mode/, path)
-      assert.match(await page(base, path), expected, path)
-    }
-  })
-  test("the language follows the cookie (Dutch)", async () => {
-    const html = await page(base, "/", "nl")
-    assert.match(html, /<html lang="nl"/)
-    assert.match(html, /Demo-modus/)
-    assert.match(await page(base, "/store", "nl"), /Mijn winkel/)
-  })
-  test("keyword rankings: a table row per keyword", async () => {
-    const html = await page(
-      base,
-      "/products/9300000138905032?tab=keywordRankings"
-    )
-    assert.match(html, /Keyword rankings/)
-    assert.match(html, /drinkfles volwassenen/)
-  })
-  test("list and detail show the same sales for a product", async () => {
-    // Kambukka Elton: NL 148 + BE 45 = 193 in the sample data.
-    assert.match(await page(base, "/products?q=drinkfles"), />193</)
-    assert.match(await page(base, "/products/9300000138905032"), />193</)
-  })
-})
-
 const hasPython = spawnSync("python3", ["--version"]).status === 0
+
+describe(
+  "demo mode: the public test key against the local mock API",
+  { skip: !hasPython && "python3 not found" },
+  () => {
+    let base
+    let mockLog = ""
+    before(async () => {
+      const mockPort = await freePort()
+      // The mock accepts only the test key here: a live key or an
+      // X-Organization-ID header gives "mock: REJECTED" in its log.
+      const mock = await start(
+        "python3",
+        ["-u", MOCK],
+        { MOCK_PORT: String(mockPort), MOCK_TEST_KEY_ONLY: "1" },
+        /Mock MarktMentor API/
+      )
+      mock.stdout.on("data", (d) => (mockLog += d))
+      mock.stderr.on("data", (d) => (mockLog += d))
+      // A live key in the environment must be ignored in demo mode.
+      base = await startApp({
+        MARKTMENTOR_DEMO: "1",
+        MARKTMENTOR_API_KEY: CANARY,
+        MARKTMENTOR_API_BASE_URL: `http://127.0.0.1:${mockPort}`,
+      })
+    })
+    test("every screen and every tab renders the sample data (English)", async () => {
+      const pages = {
+        "/": /Suggestions to follow/,
+        "/products": /Best-selling products/,
+        "/niches": /Niches with the highest search volume/,
+        "/usage": /Voorbeeldwinkel BV/,
+        "/products?q=drinkfles": /Kambukka Elton/,
+        "/products?q=drinkfles&market=NL&period=90d&minSales=10&brand=Kambukka":
+          /Brand: Kambukka/,
+        "/products/9300000138905032": /Sales history/,
+        "/products/9300000138905032?tab=visibility": /Visibility history/,
+        "/products/9300000138905032?tab=rankings": /Category rankings/,
+        "/products/9300000138905032?tab=keywords": /duurzaam/,
+        "/products/9300000138905032?tab=sellers": /bol\.com/,
+        "/products/9300000138905032?tab=reviews": /Review summary/,
+        "/products/9300000138905032?tab=variants": /Variants/,
+        "/products/9300000138905032?tab=snapshots": /Your snapshots/,
+        "/niches?q=drinkfles": /dopper drinkfles/,
+        "/niches/6797": /Products in this niche/,
+        "/niches/6797?tab=periods": /Compare periods/,
+        "/niches/6797?tab=distributions": /Product distribution/,
+        "/niches/6797?tab=reviews": /Review summary/,
+        "/niches/6797?tab=reviewHistory": /New reviews/,
+        "/store": /Voorbeeld drinkfles 750 ml/,
+        "/store?tab=stock": /stale_stock/,
+      }
+      for (const [path, expected] of Object.entries(pages)) {
+        const html = await page(base, path)
+        assert.match(html, /Demo with sample data/, path)
+        assert.match(html, /Demo · sample data/, path)
+        assert.match(html, /Example product/, path)
+        assert.match(html, expected, path)
+      }
+    })
+    test("only the test key reaches the API: no live key, no organization", () => {
+      assert.match(mockLog, /GET \/api\/public\/v1\/research\/products\//)
+      assert.doesNotMatch(mockLog, /REJECTED/)
+    })
+    test("the usage page shows the public test key", async () => {
+      assert.match(await page(base, "/usage"), /mm_test_demo/)
+    })
+    test("another product or niche: HTTP 404 with links to the examples", async () => {
+      const product = await page(base, "/products/9300000000000001")
+      assert.match(product, /The test key knows one example product/)
+      assert.match(product, /The test key knows only its example products/)
+      assert.match(product, /href="\/products\/9300000138905032"/)
+      const niche = await page(base, "/niches/1")
+      assert.match(niche, /The test key knows one example niche: 6797/)
+      assert.match(niche, /href="\/niches\/6797"/)
+    })
+    test("each filter is its own request; the same filter again is cached", async () => {
+      const calls = () =>
+        (mockLog.match(/GET \/api\/public\/v1\/research\/products\/\?/g) ?? [])
+          .length
+      await page(base, "/products?q=drinkfles")
+      const before = calls()
+      await page(base, "/products?q=another-search&market=BE")
+      assert.equal(calls(), before + 1)
+      await page(base, "/products?q=another-search&market=BE")
+      assert.equal(calls(), before + 1)
+    })
+    test("each demo visitor has their own request log (the hosted demo is public)", async () => {
+      // The first answer gives a visitor cookie: httpOnly, one per browser.
+      const visit = async (p, cookie) => {
+        const res = await fetch(base + p, {
+          headers: cookie ? { Cookie: cookie } : {},
+        })
+        assert.equal(res.status, 200, p)
+        const html = (await res.text()).replaceAll("<!-- -->", "")
+        return { html, setCookie: res.headers.get("set-cookie") ?? "" }
+      }
+      const first = await visit("/products/9300000138905032?tab=sellers")
+      assert.match(first.setCookie, /mm_demo_visitor=[0-9a-f-]{36}/)
+      assert.match(first.setCookie, /HttpOnly/i)
+      const a = first.setCookie.match(/mm_demo_visitor=[0-9a-f-]{36}/)[0]
+      const b = (await visit("/")).setCookie.match(
+        /mm_demo_visitor=[0-9a-f-]{36}/
+      )[0]
+      assert.notEqual(a, b)
+      // A known visitor keeps the id: no new cookie.
+      assert.equal((await visit("/", a)).setCookie, "")
+      // The log keeps the path: only visitor A opened the sellers tab.
+      assert.match((await visit("/usage", a)).html, /9300000138905032\/sellers/)
+      assert.doesNotMatch(
+        (await visit("/usage", b)).html,
+        /9300000138905032\/sellers/
+      )
+    })
+    test("the language follows the cookie (Dutch)", async () => {
+      const html = await page(base, "/", "nl")
+      assert.match(html, /<html lang="nl"/)
+      assert.match(html, /Demo met voorbeelddata/)
+      assert.match(await page(base, "/store", "nl"), /Mijn winkel/)
+    })
+    test("keyword rankings: a table row per keyword", async () => {
+      const html = await page(
+        base,
+        "/products/9300000138905032?tab=keywordRankings"
+      )
+      assert.match(html, /Keyword rankings/)
+      assert.match(html, /drinkfles volwassenen/)
+    })
+    test("list and detail show the same sales for a product", async () => {
+      // Kambukka Elton: NL 148 + BE 45 = 193 in the sample data.
+      assert.match(await page(base, "/products?q=drinkfles"), />193</)
+      assert.match(await page(base, "/products/9300000138905032"), />193</)
+    })
+  }
+)
 
 describe(
   "live mode against the local mock API",
@@ -194,7 +272,7 @@ describe(
       assert.match(mockLog, /store\/products\/\?[^ ]*categoryId=40142/)
     })
     test("pages render live data, the key stays on the server", async () => {
-      assert.doesNotMatch(await page(base, "/"), /Demo mode/)
+      assert.doesNotMatch(await page(base, "/"), /Demo with sample data/)
       assert.match(await page(base, "/usage"), /Voorbeeldwinkel BV/)
       assert.match(await page(base, "/products?q=drinkfles"), />Live</)
       assert.match(
@@ -324,11 +402,13 @@ describe(
         base,
         "/products/9300000138905032?tab=sales&period=2Y&interval=week"
       )
-      assert.match(
-        mockLog,
-        /sales-history\/\?[^ ]*period=2Y[^ ]*interval=month/
-      )
-      assert.doesNotMatch(mockLog, /period=2Y[^ ]*interval=week/)
+      // The SDK sends the parameters in its own order.
+      const twoYears = (interval) =>
+        new RegExp(
+          `sales-history/\\?(?=[^ ]*period=2Y)(?=[^ ]*interval=${interval})`
+        )
+      assert.match(mockLog, twoYears("month"))
+      assert.doesNotMatch(mockLog, twoYears("week"))
     })
     test("ean: in a product path: one product, 404 or 409 with candidates", async () => {
       const get = (path) =>

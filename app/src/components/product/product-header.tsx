@@ -16,7 +16,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useI18n } from "@/i18n"
-import { bothMarkets } from "@/lib/csv"
+import { marketValue } from "@/lib/markets"
 import type { ApiResult, Product } from "@/lib/types"
 
 /** Title, follow button and the NL + BE, NL and BE cards of a product. */
@@ -39,8 +39,8 @@ export function ProductHeader({
     {
       key: "both",
       label: m.common.both,
-      sales: bothMarkets(p, "sales"),
-      revenue: bothMarkets(p, "revenue"),
+      sales: marketValue(p.markets, "sales"),
+      revenue: marketValue(p.markets, "revenue"),
     },
     { key: "NL", label: m.common.nl, ...p.markets.NL },
     { key: "BE", label: m.common.be, ...p.markets.BE },
@@ -58,7 +58,7 @@ export function ProductHeader({
         <div className="flex min-w-0 flex-1 flex-col gap-2">
           <h1
             className="line-clamp-2 text-xl font-semibold tracking-tight text-balance sm:text-2xl"
-            title={p.title}
+            title={p.title ?? undefined}
           >
             {p.title}
           </h1>
@@ -67,7 +67,7 @@ export function ProductHeader({
             {fill(m.product.codes, { code: p.productCode })}
           </p>
           <div className="flex flex-wrap gap-1.5">
-            {p.categories?.map((c) => (
+            {p.categories.map((c) => (
               <Tooltip key={c.categoryId}>
                 <TooltipTrigger asChild>
                   <Badge variant="secondary" asChild>

@@ -36,21 +36,23 @@ export function ReviewItems({
         {list.data.data.map((r) => (
           <li key={r.reviewId} className="flex flex-col gap-1 py-3 first:pt-0">
             <div className="flex flex-wrap items-center gap-2 text-sm">
-              <span
-                className="flex items-center gap-0.5"
-                aria-label={fill(m.reviews.stars, { n: r.rating })}
-              >
-                {Array.from({ length: 5 }, (_, i) => (
-                  <StarIcon
-                    key={i}
-                    className={
-                      i < r.rating
-                        ? "size-3.5 fill-current"
-                        : "size-3.5 text-muted-foreground"
-                    }
-                  />
-                ))}
-              </span>
+              {r.rating != null && (
+                <span
+                  className="flex items-center gap-0.5"
+                  aria-label={fill(m.reviews.stars, { n: r.rating })}
+                >
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <StarIcon
+                      key={i}
+                      className={
+                        i < (r.rating ?? 0)
+                          ? "size-3.5 fill-current"
+                          : "size-3.5 text-muted-foreground"
+                      }
+                    />
+                  ))}
+                </span>
+              )}
               {r.title && <span className="font-medium">{r.title}</span>}
               {r.verifiedPurchase && (
                 <Badge variant="secondary">{m.reviews.verified}</Badge>
@@ -64,7 +66,7 @@ export function ReviewItems({
                 {r.text}
               </p>
             )}
-            {r.helpfulVotes > 0 && (
+            {r.helpfulVotes != null && r.helpfulVotes > 0 && (
               <span className="text-xs text-muted-foreground">
                 {fill(m.reviews.helpful, { n: r.helpfulVotes })}
               </span>

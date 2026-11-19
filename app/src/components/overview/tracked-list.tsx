@@ -82,6 +82,7 @@ export function TrackedList({
               <Button
                 variant="outline"
                 size="sm"
+                aria-label={m.overview.refresh}
                 onClick={onRefresh}
                 disabled={busy !== null}
               >

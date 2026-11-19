@@ -1,4 +1,7 @@
 // Types shared by the server functions and the pages. No secrets here.
+// The API answers use the types of the SDK (MarktMentor.*) under a short
+// name; the other types belong to this app (results, limits, local data).
+import type { MarktMentor } from "@marktmentor/api"
 
 export type Mode = "live" | "demo"
 
@@ -19,6 +22,8 @@ export type ApiFailure = {
   errors?: Record<string, string[]>
   retryAfter?: number
   requestId?: string | null
+  /** The answer came from the public test key (header X-MarktMentor-Test-Key). */
+  testKey?: boolean
 }
 export type ApiResult<T> = ApiSuccess<T> | ApiFailure
 
@@ -55,122 +60,21 @@ export type RequestLogRow = {
   requestId: string | null
 }
 
-export type Pagination = {
-  page: number
-  pageSize: number
-  total: number | null
-  hasNext: boolean
-}
-export type MarketMetrics = {
-  price?: number | null
-  sales?: number | null
-  revenue?: number | null
-  impressions?: number | null
-  sellerCount?: number | null
-  searchVolume?: number | null
-}
-export type Product = {
-  productCode: string
-  ean: string
-  title: string
-  brand?: string | null
-  imageUrl?: string | null
-  rating?: number | null
-  reviewCount?: number | null
-  updatedAt?: string
-  categories?: { categoryId: number; name: string }[]
-  markets: Partial<Record<"NL" | "BE", MarketMetrics>>
-  // Product details only:
-  familyName?: string | null
-  availableSince?: string | null
-  mainCategoryPosition?: number | null
-  lvbPossible?: boolean | null
-  dimensions?: {
-    lengthCm: number | null
-    widthCm: number | null
-    heightCm: number | null
-    weightGrams: number | null
-    packageType: string | null
-  } | null
-  commission?: {
-    priceBelow: number | null
-    fixed: number
-    percentage: number
-  }[]
-  variantCodes?: string[]
-}
-export type ProductList = { pagination: Pagination; data: Product[] }
-export type HistoryPoint = {
-  date: string
-  markets: Partial<Record<"NL" | "BE", MarketMetrics>>
-}
-export type History = { period: string; interval: string; data: HistoryPoint[] }
-export type Niche = {
-  nicheId: string
-  name: string
-  productCount?: number
-  qualityScore?: number | null
-  competitionScore?: number | null
-  markets: Partial<Record<"NL" | "BE", MarketMetrics>>
-}
-export type NicheList = { pagination: Pagination; data: Niche[] }
-export type Usage = {
-  organization: { id: number; name: string }
-  credential: string
-  plan: "bundle" | "free" | "unmetered" | "none"
-  bundle: null | {
-    includedRequests: number
-    usedRequests: number
-    remainingRequests: number
-    periodEnd: string
-  }
-  /** The free monthly requests (Premium without a bundle). Null when blocked. */
-  freeTier: null | {
-    eligible: boolean
-    limit: number
-    used: number
-    remaining: number
-    pageSize: number
-    resetsAt: string
-  }
-}
-export type StoreOverview = {
-  period: { startDate: string; endDate: string; days: number }
-  kpis: Record<string, number>
-  previous: Record<string, number>
-  changePct: Record<string, number | null>
-}
-export type StoreProduct = {
-  ean: string
-  title: string
-  sales: number
-  revenue: number
-  totalProfits: number
-  /** Percentages with 2 decimals (43.75 = 43.75 %). */
-  totalMargin: number | null
-  salesRoi: number | null
-  conversion: number | null
-  acos: number | null
-  hasProductCosts: boolean
-}
-export type StoreProducts = {
-  data: StoreProduct[]
-  pagination: Pagination & { totalMayBeCapped?: boolean }
-  costsVisible: boolean
-}
-export type StockRow = {
-  ean: string
-  title: string
-  stock: number | null
-  stockState: string
-  unknownReason: string | null
-}
-export type StoreInventory = {
-  data: StockRow[]
-  pagination: Pagination
-  counts: Record<string, number>
-  countsScope?: string
-}
+export type Pagination = MarktMentor.Pagination
+export type MarketMetrics = MarktMentor.ProductMarketMetrics
+export type Product = MarktMentor.ProductItem &
+  Partial<Pick<MarktMentor.ProductDetail, "variantCodes">>
+export type ProductList = MarktMentor.ProductListResponse
+export type HistoryPoint = MarktMentor.SalesHistoryPoint
+export type History = MarktMentor.SalesHistoryResponse
+export type Niche = MarktMentor.NicheItem
+export type NicheList = MarktMentor.NicheListResponse
+export type Usage = MarktMentor.Usage
+export type StoreOverview = MarktMentor.StoreOverviewResponse
+export type StoreProduct = MarktMentor.StorePerformanceProductPerformanceItem
+export type StoreProducts = MarktMentor.StoreProductsResponse
+export type StockRow = MarktMentor.StoreInventoryRow
+export type StoreInventory = MarktMentor.StoreInventoryResponse
 export type TrackedProduct = {
   productCode: string
   ean: string | null
@@ -203,112 +107,17 @@ export type Status = {
 
 // -- product and niche detail endpoints ---------------------------------------
 
-type Markets<T> = Partial<Record<"NL" | "BE", T>>
-
-export type VisibilityHistory = {
-  period: string
-  interval: string
-  data: {
-    date: string
-    markets: Markets<{
-      categoryImpressions: number | null
-      keywordImpressions: number | null
-    }>
-  }[]
-}
-export type CategoryRankings = {
-  period: string
-  interval: string
-  data: {
-    categoryId: number
-    history: { date: string; positions: Markets<number | null> }[]
-  }[]
-}
-export type KeywordRankings = {
-  period: string
-  interval: string
-  data: {
-    keywordId: string
-    /** Null when the product has no position on the term in keywords/. */
-    keyword: string | null
-    history: { date: string; positions: Markets<number | null> }[]
-  }[]
-}
-export type KeywordList = {
-  pagination: Pagination
-  data: {
-    keywordId: string
-    keyword: string
-    markets: Markets<{ searchVolume: number | null; position: number | null }>
-  }[]
-}
-export type Sellers = {
-  period: string
-  hasMore: boolean
-  markets: Markets<{
-    buyBoxSellerCount: number | null
-    buyBoxTakeovers: number | null
-    averageHoursInBuyBox: number | null
-  }>
-  listingChanges: { mainImage: number; title: number; description: number }
-  data: {
-    sellerCode: string
-    name: string
-    rating: number | null
-    markets: Markets<{
-      buyBoxShare: number | null
-      averagePrice: number | null
-      deliveryDays: number | null
-    }>
-  }[]
-}
-export type Review = {
-  reviewId: string
-  productCode: string
-  rating: number
-  title: string | null
-  text: string | null
-  date: string
-  verifiedPurchase: boolean
-  helpfulVotes: number
-}
-export type ReviewList = { pagination: Pagination; data: Review[] }
-export type ReviewSummary = {
-  data: {
-    averageRating: number | null
-    reviewCount: number
-    ratings: { rating: number; count: number }[]
-    positiveTopics: { topic: string; count: number }[]
-    negativeTopics: { topic: string; count: number }[]
-  }
-}
-export type ReviewHistory = {
-  data: {
-    reviews: {
-      date: string
-      reviewCount: number
-      averageRating: number | null
-    }[]
-  }
-}
-export type ProductDistributions = {
-  period: string
-  data: {
-    productCount: number
-    total: Record<
-      "price" | "sales" | "revenue",
-      {
-        fromValue: number | null
-        toValue: number | null
-        productCount: number
-      }[]
-    >
-  }
-}
-export type NicheDetail = Niche & {
-  periods?: { period: string; markets: Markets<MarketMetrics> }[]
-}
-
+export type VisibilityHistory = MarktMentor.VisibilityHistoryResponse
+export type CategoryRankings = MarktMentor.CategoryRankingsResponse
+export type KeywordRankings = MarktMentor.KeywordRankingsResponse
+export type KeywordList = MarktMentor.KeywordResponse
+export type Sellers = MarktMentor.SellerResponse
+export type Review = MarktMentor.ReviewItem
+export type ReviewList = MarktMentor.ReviewListResponse
+export type ReviewSummary = MarktMentor.ReviewSummaryResponse
+export type ReviewHistory = MarktMentor.NicheHistoryResponse
+export type ProductDistributions = MarktMentor.NicheDistributionsResponse
+export type NicheDetail = MarktMentor.NicheDetail
 export type TrendPoint = {
   date: string
   sales: number | null

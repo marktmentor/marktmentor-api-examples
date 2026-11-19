@@ -3,7 +3,6 @@
     "title": "MarktMentor API-voorbeeld",
     "appName": "API-voorbeeld",
     "language": "Taal",
-    "theme": "Thema",
     "light": "Licht",
     "dark": "Donker",
     "system": "Systeem",
@@ -21,10 +20,17 @@
     "docs": "API-documentatie"
   },
   "demo": {
-    "title": "Demo-modus",
-    "body": "Je ziet voorbeelddata uit de API-referentie, geen live data. Elke zoekopdracht toont dezelfde paar producten. Zet MARKTMENTOR_API_KEY in .env en start opnieuw voor je eigen data."
+    "title": "Demo met voorbeelddata",
+    "badge": "Demo · voorbeelddata",
+    "body": "Deze app doet aanvragen bij de echte MarktMentor-API met de openbare testkey mm_test_demo. De testkey antwoordt met productiedata die op 17 november 2026 is vastgelegd voor een gesloten set: de niche “drinkfles” en de 10 best verkopende producten daarin, plus de verzonnen winkel “Voorbeeldwinkel BV”. Zoeken, filters, sorteren, pagina's, markten en periodes werken binnen die set. Elk product en elke niche in een lijst gaat open; een code buiten de set die je zelf typt, geeft HTTP 404. Dit is geen live data.",
+    "tryLabel": "Probeer de voorbeelden:",
+    "exampleProduct": "Voorbeeldproduct",
+    "exampleNiche": "Voorbeeldniche",
+    "ownData": "Voor je eigen data: draai deze app op je eigen computer met je eigen API-key in MARKTMENTOR_API_KEY.",
+    "notFoundHint": "De testkey kent alleen zijn voorbeeldproducten en de niche “drinkfles”. Open een van de voorbeelden, of kies een product op de pagina Producten of Niches.",
+    "oneNiche": "De testkey heeft één voorbeeldniche: sorteren en het aantal per pagina veranderen deze lijst dus niet."
   },
-  "footer": "Voorbeeldproject voor de MarktMentor Public API. Het draait alleen op je eigen computer (127.0.0.1). De API-voorwaarden gelden voor de data, ook in de lokale database.",
+  "footer": "Voorbeeldproject voor de MarktMentor Public API. Met je eigen key draait het alleen op je eigen computer (127.0.0.1); alleen de demo-modus met de openbare testkey mag openbaar zijn. De algemene voorwaarden van MarktMentor gelden voor de data, ook in de lokale database.",
   "quota": {
     "label": "Research-aanvragen",
     "unknown": "Nog niet bekend",
@@ -40,31 +46,29 @@
     "live": "Live",
     "cacheTip": "Uit de lokale SQLite-cache, opgehaald {time}. Dit kostte geen aanvraag.",
     "liveTip": "Net opgehaald. Dit kostte één research-aanvraag.",
-    "liveFreeTip": "Net opgehaald. Winkel-aanvragen zijn gratis."
+    "liveFreeTip": "Net opgehaald. Winkelaanvragen zijn gratis."
   },
   "common": {
     "nl": "Nederland",
     "be": "België",
     "nlShort": "NL",
     "beShort": "BE",
-    "last30": "laatste 30 dagen",
     "both": "NL + BE",
     "csv": "CSV exporteren",
-    "back": "Terug",
     "follow": "Volgen",
     "following": "Gevolgd",
     "none": "–",
     "ean": "EAN",
     "search": "Zoeken",
-    "page": "Pagina {page}",
     "previous": "Vorige",
     "next": "Volgende",
     "nextCost": "De volgende pagina kost één research-aanvraag.",
-    "was": "was {v}"
+    "was": "was {v}",
+    "pagination": "Paginering",
+    "previousPage": "Naar de vorige pagina",
+    "nextPage": "Naar de volgende pagina"
   },
   "overview": {
-    "title": "Overzicht",
-    "description": "Je verbinding, je tegoed en de producten die je volgt.",
     "connection": "Verbinding",
     "connected": "Verbonden",
     "notConnected": "Niet verbonden",
@@ -88,20 +92,11 @@
     "todayCached": "{n} antwoorden kwamen uit de cache, zonder kosten.",
     "localRows": "Lokale database: {cache} antwoorden, {snapshots} snapshots.",
     "noResearchTitle": "Deze key heeft geen research-toegang",
-    "noResearchBody": "Research vraagt een actief, betaald MarktMentor Premium-abonnement of hoger (een proefperiode telt niet). Dan krijgt de organisatie 100 gratis research-aanvragen per maand, of meer met een API-bundel. Mijn winkel werkt met Pro: winkel-aanvragen zijn gratis.",
-    "tracked": "Gevolgde producten",
-    "trackedDescription": "Elke dag één snapshot per product, in je eigen SQLite-database. Zo bouw je je eigen geschiedenis op.",
+    "noResearchBody": "Research vraagt een actief, betaald MarktMentor Premium-abonnement of hoger (een proefperiode telt niet). Dan krijgt de organisatie 100 gratis research-aanvragen per maand, of meer met een API-bundel. Mijn winkel werkt met Pro: winkelaanvragen zijn gratis.",
     "refresh": "Verversen",
     "refreshCost": "Kost hooguit {n} research-aanvragen: één per product, één keer per dag.",
     "refreshDone": "{fetched} opgehaald ({fetched} aanvragen), {cached} uit de cache (geen aanvragen).",
-    "refreshStopped": "Gestopt: {code}",
-    "emptyTracked": "Je volgt nog geen producten.",
-    "emptyTrackedHint": "Zoek een product en kies Volgen.",
-    "goProducts": "Producten zoeken",
-    "lastSnapshot": "Laatste snapshot",
-    "priceNl": "Prijs NL",
     "sales30": "Verkopen 30d",
-    "snapshots": "Snapshots",
     "local": "Lokale data",
     "localDescription": "De database is data/marktmentor.db. Gebruik de data alleen voor je eigen bedrijf. Wis hem als je hem niet meer nodig hebt of als je toegang tot de API stopt.",
     "clear": "Lokale data wissen",
@@ -115,32 +110,17 @@
     "title": "Producten",
     "description": "Zoek in de productdata van bol voor Nederland en België. Elke pagina van 25 producten is één research-aanvraag. Dezelfde zoekopdracht op dezelfde dag komt uit de cache.",
     "query": "Zoekwoorden",
-    "queryHint": "Alle woorden moeten passen.",
-    "or": "of",
-    "eanPlaceholder": "5407005143414",
-    "queryPlaceholder": "drinkfles",
-    "sort": "Sorteren op",
-    "sorts": {
-      "-sales": "Verkopen (hoog naar laag)",
-      "-revenue": "Omzet (hoog naar laag)",
-      "price": "Prijs (laag naar hoog)",
-      "-price": "Prijs (hoog naar laag)"
-    },
-    "count": "{n} producten",
     "product": "Product",
     "price": "Prijs NL",
     "sales": "Verkopen 30d",
-    "revenue": "Omzet 30d",
     "reviews": "Beoordeling",
     "salesSplit": "NL {nl} · BE {be}",
-    "start": "Typ zoekwoorden of een EAN. De app stuurt pas een aanvraag als je op Zoeken klikt.",
     "empty": "Geen producten gevonden",
     "emptyHint": "Dit telde wel als één aanvraag. Controleer de spelling: alle woorden moeten passen.",
     "followed": "Je volgt dit product nu.",
     "unfollowed": "Je volgt dit product niet meer."
   },
   "product": {
-    "total": "Totaal, laatste 30 dagen",
     "sellers": "Verkopers",
     "price": "Prijs",
     "sales": "Verkopen",
@@ -168,25 +148,18 @@
   "niches": {
     "title": "Niches",
     "description": "Een niche is een zoekterm met zijn vraag en aanbod. Elke pagina met resultaten is één research-aanvraag.",
-    "count": "{n} niches",
     "niche": "Niche",
-    "searchVolume": "Zoekvolume NL",
-    "revenue": "Omzet 30d",
     "products": "Producten",
     "quality": "Kwaliteit",
     "competition": "Concurrentie",
-    "start": "Typ een zoekterm, bijvoorbeeld drinkfles.",
     "empty": "Geen niches gevonden",
     "emptyHint": "Dit telde wel als één aanvraag.",
-    "volumeBoth": "Zoekvolume NL / BE",
-    "revenueNl": "Omzet 30d NL",
-    "scores": "Kwaliteit / concurrentie",
     "productsTitle": "Producten in deze niche",
     "productsDescription": "Deze pagina kost twee research-aanvragen: de niche en de eerste 25 producten."
   },
   "store": {
     "title": "Mijn winkel",
-    "description": "De cijfers van je eigen gekoppelde bol-winkel. Winkel-aanvragen zijn gratis en vragen geen bundel, alleen het Pro-abonnement.",
+    "description": "De cijfers van je eigen gekoppelde bol-winkel. Winkelaanvragen zijn gratis en vragen geen bundel, alleen het Pro-abonnement.",
     "range": "{start} t/m {end}",
     "days": {
       "7": "Laatste 7 dagen",
@@ -241,7 +214,7 @@
     "codes": {
       "not_authenticated": "Er is geen key meegestuurd. Zet MARKTMENTOR_API_KEY in .env.",
       "authentication_failed": "De key klopt niet of is ingetrokken, of de maker is geen beheerder meer. Maak een nieuwe key in Instellingen → MarktMentor API.",
-      "api_terms_required": "Een beheerder moet de API-voorwaarden accepteren in het dashboard: Instellingen → MarktMentor API.",
+      "api_terms_required": "De eigenaar of een beheerder van de organisatie moet de algemene voorwaarden accepteren in het dashboard: Instellingen → MarktMentor API.",
       "product_research_api_required": "Research vraagt een API-bundel of research-toegang van MarktMentor. Mijn winkel werkt wel zonder bundel (Pro).",
       "subscription_required": "Research vraagt een actief, betaald MarktMentor Premium-abonnement of hoger. Een proefperiode telt niet. Mijn winkel vraagt Pro.",
       "subscription_plan_required": "De winkel-endpoints vragen het Pro-abonnement of hoger.",
@@ -255,6 +228,7 @@
       "reserve_reached": "De app stopt bij de reserve om je tegoed te sparen. Pas MARKTMENTOR_RESERVE aan in .env.",
       "not_found": "Dit product of deze niche bestaat niet.",
       "not_found_html": "Het pad bestaat niet, de key is ongeldig, of de API staat nog niet aan voor je organisatie (early access). Controleer MARKTMENTOR_API_BASE_URL of neem contact op met MarktMentor.",
+      "follow_limit": "In de demo volg je maximaal 50 producten. Stop eerst met het volgen van een product.",
       "network_error": "De API is niet bereikbaar. Controleer je verbinding en MARKTMENTOR_API_BASE_URL.",
       "research_unavailable": "De research-data is even niet beschikbaar. Probeer het later opnieuw.",
       "billing_period_changed": "Er is een nieuwe factuurperiode begonnen. Probeer het opnieuw.",
@@ -279,7 +253,7 @@
   },
   "requests": {
     "title": "Recente aanvragen",
-    "description": "De laatste 15 aanroepen van deze app, uit de lokale log. Zo zie je de limieten werken: de status, wat er na elke aanroep over is van de minuutlimiet, en Retry-After bij HTTP 429.",
+    "description": "De laatste 15 aanvragen van deze app, uit de lokale log. Zo zie je de limieten werken: de status, wat er na elke aanvraag over is van de minuutlimiet, en Retry-After bij HTTP 429.",
     "time": "Tijd",
     "endpoint": "Endpoint",
     "status": "Status",
@@ -361,7 +335,6 @@
     "keyword": "Zoekwoord",
     "position": "Positie",
     "volume": "Zoekvolume",
-    "period": "Periode",
     "periods": {
       "7d": "7 dagen",
       "30d": "30 dagen",
@@ -396,7 +369,6 @@
   },
   "reviews": {
     "summaryTitle": "Samenvatting van de reviews",
-    "averageRating": "Gemiddelde beoordeling",
     "count": "{n} reviews",
     "positive": "Positieve onderwerpen",
     "negative": "Negatieve onderwerpen",
@@ -467,13 +439,11 @@
       "NL": "NL",
       "BE": "BE"
     },
-    "period": "Periode",
     "periods": {
       "30d": "30 dagen",
       "90d": "90 dagen",
       "365d": "1 jaar"
     },
-    "sort": "Sorteren op",
     "productSorts": {
       "-sales": "Verkopen, hoog naar laag",
       "sales": "Verkopen, laag naar hoog",
@@ -530,7 +500,7 @@
     "category": "Categorie"
   },
   "niche": {
-    "vsYear": "t.o.v. een gemiddelde 30 dagen in het afgelopen jaar",
+    "vsYear": "t.o.v. gemiddeld {days} dagen in het afgelopen jaar",
     "perMonth": "Per 30 dagen",
     "total": "Totaal",
     "searchVolume": "Zoekvolume",
@@ -567,7 +537,7 @@
     "emptyBody": "Volg producten om hier hun verkopen door de tijd te zien. Zoek een product en klik op de ster. Volgen laadt meteen de trend: één research-aanvraag.",
     "emptyAction": "Producten zoeken",
     "storeTitle": "Mijn winkel in het kort",
-    "storeDescription": "De laatste 30 dagen van je gekoppelde bol-winkel. Winkel-aanvragen zijn gratis.",
+    "storeDescription": "De laatste 30 dagen van je gekoppelde bol-winkel. Winkelaanvragen zijn gratis.",
     "storeLink": "Naar mijn winkel",
     "followCost": "Volgen laadt ook de trendlijn: één research-aanvraag.",
     "trendLoaded": "Trend geladen (één research-aanvraag).",
@@ -576,15 +546,12 @@
   },
   "usagePage": {
     "title": "API-gebruik",
-    "description": "Je verbinding, het tegoed, de limieten per minuut, het logboek van aanroepen en de lokale data.",
-    "connection": "Verbinding",
-    "plan": "Research-plan",
+    "description": "Je verbinding, het tegoed, de limieten per minuut, het logboek van aanvragen en de lokale data.",
     "limits": "Limieten per minuut",
-    "cache": "Lokale cache",
-    "cacheBody": "{cache} antwoorden in de cache, {snapshots} snapshots, {requests} aanroepen in het logboek.",
+    "cacheBody": "{cache} antwoorden in de cache, {snapshots} snapshots, {requests} aanvragen in het logboek.",
     "cacheHint": "Research-antwoorden blijven de rest van de dag geldig. Een herhaalde vraag kost niets.",
     "unmeteredNote": "Deze research-toegang wordt niet geteld: de antwoorden hebben geen X-Research-Requests-headers, dus er is geen tegoed om te tonen.",
-    "freeNote": "Gratis aanvragen: 100 geslaagde research-aanvragen per kalendermaand (UTC) voor de organisatie, gedeeld door alle API-keys en het portaal. Hooguit 10 resultaten per pagina."
+    "freeNote": "Gratis aanvragen: 100 geslaagde research-aanvragen per kalendermaand (UTC) voor de organisatie, gedeeld door alle API-keys en het portaal. Hooguit 25 resultaten per pagina."
   },
   "navExtra": {
     "usage": "API-gebruik"
@@ -602,7 +569,6 @@
     "clearRange": "Laatste dagen gebruiken",
     "eans": "EAN's, gescheiden door komma's",
     "ean": "EAN",
-    "stockState": "Voorraadstatus",
     "allStates": "Alle statussen",
     "sorts": {
       "-revenue": "Omzet, hoog naar laag",
@@ -616,7 +582,7 @@
     },
     "pageSize": "{n} per pagina",
     "apply": "Toepassen",
-    "free": "Winkel-aanvragen zijn gratis en vragen geen bundel.",
+    "free": "Winkelaanvragen zijn gratis en vragen geen bundel.",
     "countsScope": {
       "resolved_page": "Aantallen voor deze pagina",
       "resolved_catalogue": "Aantallen voor alle actieve producten"
@@ -638,9 +604,9 @@
     "paymentFailedBody": "De betaling voor je API-bundel is mislukt, dus de app haalt geen lijst op. De eigenaar van de organisatie moet de betaalmethode bijwerken; de bundel loopt door zodra de betaling lukt. De winkelpagina's werken gewoon."
   },
   "ticker": {
-    "title": "Laatste handeling",
-    "none": "Nog geen handeling",
-    "costTip": "Research-aanvragen die deze handeling van je tegoed gebruikte.",
+    "title": "Laatste actie",
+    "none": "Nog geen actie",
+    "costTip": "Research-aanvragen die deze actie van je tegoed gebruikte.",
     "cache": "{n} uit cache",
     "free": "{n} gratis",
     "failed": "{n} mislukt",
@@ -653,8 +619,8 @@
     "kindCache": "cache",
     "kindFree": "gratis",
     "kindFailed": "mislukt",
-    "localOnly": "Deze melder leest alleen het lokale log. Hij roept de API nooit aan en kost niets.",
-    "allUsage": "Alles in API-gebruik",
+    "localOnly": "Deze melder leest alleen het lokale log. Hij doet nooit een aanvraag bij de API en kost niets.",
+    "allUsage": "Bekijk al het API-gebruik",
     "rateLimited": "Limiet per minuut bereikt",
     "reserve": "Reserve bereikt: research stopt bij {reserve}",
     "empty": "Nog geen aanvragen",
@@ -669,7 +635,7 @@
     "results": "Resultaten",
     "top": "Hoofdcategorieën",
     "back": "Terug",
-    "allOf": "Heel {name}",
+    "allOf": "Alles in {name}",
     "anyCategory": "Elke categorie",
     "anyBrand": "Elk merk",
     "browse": "Toon de {n} subcategorieën van {name}",

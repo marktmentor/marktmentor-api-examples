@@ -30,11 +30,16 @@ function Overview() {
 
   const run = async (kind: "trends" | "refresh") => {
     setBusy(kind)
-    const result =
-      kind === "trends"
-        ? await loadTrends({ data: {} })
-        : await refreshTracked()
-    setBusy(null)
+    let result
+    try {
+      result =
+        kind === "trends"
+          ? await loadTrends({ data: {} })
+          : await refreshTracked()
+    } finally {
+      // Also when the server function rejects, so the buttons do not stay off.
+      setBusy(null)
+    }
     notifyUsage()
     if (result.error)
       toast.error(fill(m.home.trendStopped, { code: result.error.code }))

@@ -3,10 +3,14 @@ import "@tanstack/react-start/server-only"
 // The local cache. Research data is a daily snapshot, so an answer is kept
 // for its data day (lib/data-day.ts) and the same question costs nothing.
 import { dataDay } from "@/lib/data-day"
+import { isSnapshotKey } from "@/lib/snapshot-key"
 import { config } from "./config"
 import { getDb } from "./db"
 
-/** The cache key: mode, path and the sorted, non-empty query parameters. */
+/**
+ * The cache key: mode, path and the sorted, non-empty query parameters. The
+ * test key applies every filter too, so each filter has its own answer.
+ */
 export function cacheKey(path: string, params: Record<string, unknown>) {
   const query = Object.keys(params)
     .filter(
@@ -64,12 +68,11 @@ export function cachedAnswer<T>(path: string, params: Record<string, unknown>) {
  * newest first. Snapshots compare days, so they use only these figures.
  */
 export function todaysSnapshotBodies(): string[] {
-  return (
-    getDb()
-      .prepare(
-        `select body from api_cache where mode = ? and fetched_day = ? and path like 'research/%'
-           and key like '%market=ALL%' and key like '%period=30d%' order by fetched_at desc`
-      )
-      .all(config().mode, dataDay()) as { body: string }[]
-  ).map((r) => r.body)
+  const rows = getDb()
+    .prepare(
+      `select key, body from api_cache where mode = ? and fetched_day = ? and path like 'research/%'
+         order by fetched_at desc`
+    )
+    .all(config().mode, dataDay()) as { key: string; body: string }[]
+  return rows.filter((r) => isSnapshotKey(r.key)).map((r) => r.body)
 }

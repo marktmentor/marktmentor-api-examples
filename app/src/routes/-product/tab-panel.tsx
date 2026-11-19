@@ -33,7 +33,12 @@ export function ProductTabPanel({
   switch (tab.kind) {
     case "sales":
       return (
-        <SalesTab result={tab.result} ean={p.ean} {...history} onChange={go} />
+        <SalesTab
+          result={tab.result}
+          ean={p.ean ?? p.productCode}
+          {...history}
+          onChange={go}
+        />
       )
     case "visibility":
       return <VisibilityTab result={tab.result} {...history} onChange={go} />
@@ -42,7 +47,7 @@ export function ProductTabPanel({
         <RankingsTab
           result={tab.result}
           categoryNames={Object.fromEntries(
-            (p.categories ?? []).map((c) => [c.categoryId, c.name])
+            p.categories.map((c) => [c.categoryId, c.name])
           )}
           {...history}
           onChange={go}

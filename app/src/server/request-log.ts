@@ -3,9 +3,10 @@ import "@tanstack/react-start/server-only"
 // Every call the app makes, answered by the API or by the local cache. The
 // usage meter and the API usage page read this log; they never call the API.
 import type { RequestLogRow } from "@/lib/types"
-import { config } from "./config"
 import { getDb } from "./db"
 import { type Rate, bucketOf } from "./limits"
+import { owner } from "./owner"
+import { keepSmall } from "./retention"
 
 export function logRequest(
   path: string,
@@ -16,12 +17,12 @@ export function logRequest(
 ) {
   getDb()
     .prepare(
-      `insert into request_log (at, mode, path, status, research, from_cache, request_id,
+      `insert into request_log (at, owner, path, status, research, from_cache, request_id,
          bucket, rate_limit, rate_remaining, retry_after) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
     )
     .run(
       new Date().toISOString(),
-      config().mode,
+      owner(),
       path,
       status,
       bucketOf(path) === "research" ? 1 : 0,
@@ -32,6 +33,7 @@ export function logRequest(
       rate?.remaining ?? null,
       rate?.retryAfter ?? null
     )
+  keepSmall()
 }
 
 export function recentRequests(limit = 15): RequestLogRow[] {
@@ -39,7 +41,7 @@ export function recentRequests(limit = 15): RequestLogRow[] {
     .prepare(
       `select id, at, path, status, from_cache as fromCache, bucket, rate_limit as rateLimit,
          rate_remaining as rateRemaining, retry_after as retryAfter, request_id as requestId
-       from request_log where mode = ? order by id desc limit ?`
+       from request_log where owner = ? order by id desc limit ?`
     )
-    .all(config().mode, limit) as RequestLogRow[]
+    .all(owner(), limit) as RequestLogRow[]
 }

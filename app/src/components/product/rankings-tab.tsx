@@ -16,7 +16,7 @@ export function RankingsTab({
   ...history
 }: {
   result: ApiResult<CategoryRankings>
-  categoryNames: Record<number, string>
+  categoryNames: Record<number, string | null>
 } & HistoryProps) {
   const { m, fill } = useI18n()
   return (

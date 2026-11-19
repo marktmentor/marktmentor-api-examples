@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useI18n } from "@/i18n"
-import { bothMarkets } from "@/lib/csv"
+import { marketValue } from "@/lib/markets"
 import type { ApiResult, ProductList } from "@/lib/types"
 
 /** GET research/products/?variantsOf={code}: the product family. */
@@ -53,7 +53,7 @@ export function VariantsTab({
                       to="/products/$productCode"
                       params={{ productCode: p.productCode }}
                       className="truncate font-medium hover:underline"
-                      title={p.title}
+                      title={p.title ?? undefined}
                     >
                       {p.title}
                     </Link>
@@ -66,7 +66,7 @@ export function VariantsTab({
                   {price(p.markets.NL?.price)}
                 </TableCell>
                 <TableCell className="text-right tabular-nums">
-                  {num(bothMarkets(p, "sales"))}
+                  {num(marketValue(p.markets, "sales"))}
                 </TableCell>
               </TableRow>
             ))}

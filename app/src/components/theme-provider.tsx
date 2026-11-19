@@ -88,9 +88,5 @@ export function ThemeProvider({
 }
 
 export function useTheme() {
-  const context = useContext(ThemeProviderContext)
-  // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition -- as in the shadcn/ui guide
-  if (context === undefined)
-    throw new Error("useTheme must be used within a ThemeProvider")
-  return context
+  return useContext(ThemeProviderContext)
 }

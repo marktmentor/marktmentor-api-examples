@@ -13,15 +13,21 @@ export function OptionSelect<T extends string>({
   labels,
   onChange,
   className = "w-36",
+  disabled = false,
 }: {
   value: T
   options: readonly T[]
   labels: Record<T, string>
   onChange: (value: T) => void
   className?: string
+  disabled?: boolean
 }) {
   return (
-    <Select value={value} onValueChange={(v) => onChange(v as T)}>
+    <Select
+      value={value}
+      onValueChange={(v) => onChange(v as T)}
+      disabled={disabled}
+    >
       <SelectTrigger size="sm" className={className}>
         <SelectValue />
       </SelectTrigger>

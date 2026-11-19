@@ -66,7 +66,7 @@ export function DistributionsTab({
                       from: fmt(from),
                       to: fmt(to),
                     })
-            const rows = d.data.total[key].map((b) => ({
+            const rows = (d.data.total?.[key] ?? []).map((b) => ({
               range: label(b.fromValue, b.toValue),
               productCount: b.productCount,
             }))

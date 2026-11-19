@@ -9,11 +9,13 @@ import {
 import { useI18n } from "@/i18n"
 import type { StoreProduct } from "@/lib/types"
 
-/** GET store/products/ with its filters. */
-/** One page of store products: sales, revenue, profit, margin, ROI, conversion and ACoS. */
-const pct = (v: number | null, dec: (n: number) => string, none: string) =>
-  v === null ? none : `${dec(v)}%`
+const pct = (
+  v: number | null | undefined,
+  dec: (n: number) => string,
+  none: string
+) => (v == null ? none : `${dec(v)}%`)
 
+/** One page of store products: sales, revenue, profit, margin, ROI, conversion and ACoS. */
 export function StoreProductsTable({ products }: { products: StoreProduct[] }) {
   const { m, num, eur, dec } = useI18n()
   return (

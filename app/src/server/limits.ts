@@ -4,7 +4,7 @@ import "@tanstack/react-start/server-only"
 // allowance (X-Research-Requests-*) and the per-minute windows (RateLimit-*).
 import type { Bucket, Quota, RateWindow, Rates } from "@/lib/types"
 import { config } from "./config"
-import { getDb, getMeta, setMeta } from "./db"
+import { getMeta, setMeta } from "./db"
 
 export type Rate = { limit: number; remaining: number; retryAfter?: number }
 
@@ -74,34 +74,6 @@ export function readRate(headers: Headers, path: string): Rate | null {
     resetAt: new Date(
       Date.now() + Math.max(reset, retryAfter ?? 0) * 1000
     ).toISOString(),
-    updatedAt: new Date().toISOString(),
-  })
-  return rate
-}
-
-const DEMO_LIMITS: Record<Bucket, number> = {
-  research: 30,
-  store: 60,
-  account: 30,
-  reference: 120,
-}
-
-/** The demo has no real headers: imitate the limits from the local log. */
-export function demoRate(path: string): Rate {
-  const bucket = bucketOf(path)
-  const limit = DEMO_LIMITS[bucket]
-  const since = new Date(Date.now() - 60_000).toISOString()
-  const used = (
-    getDb()
-      .prepare(
-        "select count(*) n from request_log where mode = 'demo' and from_cache = 0 and bucket = ? and at >= ?"
-      )
-      .get(bucket, since) as { n: number }
-  ).n
-  const rate = { limit, remaining: Math.max(limit - used - 1, 0) }
-  saveWindow(path, {
-    ...rate,
-    resetAt: new Date(Date.now() + 60_000).toISOString(),
     updatedAt: new Date().toISOString(),
   })
   return rate

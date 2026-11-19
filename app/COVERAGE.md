@@ -20,7 +20,7 @@ value on purpose, with the reason.
 | | `pageSize` | Products: 10 or 25 per page (25 is the maximum) |
 | | `variantsOf` | Product page: tab Variants |
 | `research/products/{code}/` | `market`, `period` | Product page: header toggles; the extra fields in "Product details" |
-| | `ean:<EAN>` in place of `{code}` | Not used: the app reaches a product from a list, so it always has the product code. The `ean_history` scripts use it |
+| | `ean:<EAN>` in place of `{code}` | Not used: the app reaches a product from a list, so it always has the product code. The `ean_history` script uses it |
 | `…/sales-history/` | `market`, `period`, `interval` | Product page: tab Sales |
 | `…/visibility-history/` | `market`, `period`, `interval` | Product page: tab Visibility |
 | `…/category-rankings/` | `market`, `period`, `interval` | Product page: tab Category rankings |

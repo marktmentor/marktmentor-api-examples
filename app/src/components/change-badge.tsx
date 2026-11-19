@@ -1,4 +1,4 @@
-import { TrendingDownIcon, TrendingUpIcon } from "lucide-react"
+import { MinusIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { useI18n } from "@/i18n"
 import { type ChangeKind, changeOf } from "@/lib/change"
@@ -23,7 +23,13 @@ export function ChangeBadge({
   const good = change.diff === 0 || change.diff > 0 === higherIsBetter
   return (
     <Badge variant={good ? "outline" : "destructive"} className="tabular-nums">
-      {change.diff >= 0 ? <TrendingUpIcon /> : <TrendingDownIcon />}
+      {change.diff > 0 ? (
+        <TrendingUpIcon />
+      ) : change.diff < 0 ? (
+        <TrendingDownIcon />
+      ) : (
+        <MinusIcon />
+      )}
       {change.type === "pct"
         ? pct(change.value)
         : `${sign(change.diff)}${fmt(change.diff)} · ${fill(m.common.was, { v: fmt(change.previous) })}`}

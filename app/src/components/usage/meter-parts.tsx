@@ -5,7 +5,7 @@ import { useNow } from "@/hooks/use-now"
 import { useUsage } from "@/hooks/use-usage"
 import { useI18n } from "@/i18n"
 import type { Quota, Rates } from "@/lib/types"
-import { cn } from "cn"
+import { cn } from "@/lib/utils"
 
 // The parts of the usage meter: the last action, the counters and a stop.
 const PULSE =

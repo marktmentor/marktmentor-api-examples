@@ -1,4 +1,5 @@
 import { useRouterState } from "@tanstack/react-router"
+import { FlaskConicalIcon } from "lucide-react"
 import { useEffect, useState } from "react"
 import { LanguageToggle } from "@/components/language-toggle"
 import { ModeToggle } from "@/components/mode-toggle"
@@ -28,7 +29,7 @@ export function SiteHeader({
   return (
     <header className="flex h-(--header-height) shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-(--header-height)">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
-        <SidebarTrigger className="-ml-1" />
+        <SidebarTrigger className="-ml-1" aria-label={m.meta.toggleSidebar} />
         <Separator
           orientation="vertical"
           className="mx-2 data-[orientation=vertical]:h-4"
@@ -37,8 +38,9 @@ export function SiteHeader({
           {m.meta.title}
         </span>
         {demo && (
-          <Badge variant="secondary" className="hidden sm:inline-flex">
-            {m.overview.modeDemo}
+          <Badge variant="secondary" className="shrink-0">
+            <FlaskConicalIcon />
+            {m.demo.badge}
           </Badge>
         )}
         <div className="ml-auto flex items-center gap-1">

@@ -36,7 +36,7 @@ import {
 } from "@/lib/filters"
 import { useFollow } from "@/hooks/use-follow"
 import { defaultProducts, searchProducts } from "@/api/products"
-import { listTracked } from "@/api/tracked"
+import { getTrackedCodes } from "@/api/tracked"
 import type { Product } from "@/lib/types"
 
 export const Route = createFileRoute("/products/")({
@@ -44,7 +44,7 @@ export const Route = createFileRoute("/products/")({
     parseProductFilters(s),
   loaderDeps: ({ search }) => search,
   loader: async ({ deps }) => {
-    const tracked = new Set((await listTracked()).map((t) => t.productCode))
+    const tracked = new Set(await getTrackedCodes())
     // Without any search or filter: the default list (one request a day).
     if (isDefaultView(deps)) {
       const list = await defaultProducts()

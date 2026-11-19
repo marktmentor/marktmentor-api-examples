@@ -33,13 +33,7 @@ function statusVariant(status: number) {
 
 /** The last calls of this app with their status and the per-minute limit left. */
 export function RecentRequests({ rows }: { rows: RequestLogRow[] }) {
-  const { m, fill, num, locale } = useI18n()
-  const time = (v: string) =>
-    new Date(v).toLocaleTimeString(locale === "nl" ? "nl-NL" : "en-GB", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    })
+  const { m, fill, num, time } = useI18n()
   return (
     <Card>
       <CardHeader>

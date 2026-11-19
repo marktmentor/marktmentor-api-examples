@@ -16,7 +16,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useI18n } from "@/i18n"
-import { bothMarkets } from "@/lib/csv"
+import { marketValue } from "@/lib/markets"
 import type { Market } from "@/lib/filters"
 import type { Product } from "@/lib/types"
 
@@ -39,7 +39,7 @@ export function ProductTable({
 }) {
   const { m, fill, num, eur, price, dec } = useI18n()
   const value = (p: Product, key: "sales" | "revenue") =>
-    market === "ALL" ? bothMarkets(p, key) : (p.markets[market]?.[key] ?? null)
+    marketValue(p.markets, key, market)
   const priceOf = (p: Product) =>
     market === "BE"
       ? p.markets.BE?.price
@@ -93,7 +93,7 @@ export function ProductTable({
                         to="/products/$productCode"
                         params={{ productCode: p.productCode }}
                         className="truncate font-medium hover:underline"
-                        title={p.title}
+                        title={p.title ?? undefined}
                       >
                         {p.title}
                       </Link>

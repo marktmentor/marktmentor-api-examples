@@ -7,7 +7,12 @@ import { apiGet } from "@/server/client"
 import { config } from "@/server/config"
 import { getDb } from "@/server/db"
 import { defaultList } from "@/server/defaults"
+import { owner } from "@/server/owner"
+import { product } from "@/server/research-query"
+import { trackedCodes } from "@/server/tracked"
 import { productQuery } from "@/lib/filters"
+import { fields, productCodes } from "@/lib/input"
+import { marketValue, sumMarkets } from "@/lib/markets"
 import type {
   History,
   Overview,
@@ -19,11 +24,7 @@ import type {
 
 /** The trend request: one year per month. Keep it equal to the call below, or the cache misses. */
 const TREND = { market: "ALL", period: "1Y", interval: "month" } as const
-const trendPath = (code: string) =>
-  `research/products/${encodeURIComponent(code)}/sales-history/`
-
-const sum = (a: number | null | undefined, b: number | null | undefined) =>
-  a == null && b == null ? null : (a ?? 0) + (b ?? 0)
+const trendPath = (code: string) => product(code, "sales-history/")
 
 const month = (iso: string) => iso.slice(0, 7)
 
@@ -40,12 +41,11 @@ function trendOf(code: string): TrendPoint[] | null {
     .filter((p) => month(p.date) < fetchedMonth)
     .map((p) => ({
       date: p.date,
-      sales: sum(p.markets.NL?.sales, p.markets.BE?.sales),
-      revenue: sum(p.markets.NL?.revenue, p.markets.BE?.revenue),
+      sales: marketValue(p.markets, "sales"),
+      revenue: marketValue(p.markets, "revenue"),
     }))
 }
 
-/** The last two full months: for the change badge and to rank risers and fallers. */
 /** A trend is current when it was fetched this month: it has the last full month. */
 function trendIsCurrent(code: string) {
   const cached = cachedAnswer<History>(trendPath(code), TREND)
@@ -55,6 +55,7 @@ function trendIsCurrent(code: string) {
   )
 }
 
+/** The last two full months: for the change badge and to rank risers and fallers. */
 function lastTwo(trend: TrendPoint[] | null) {
   if (!trend || trend.length < 2)
     return { lastSales: null, prevSales: null, change: null }
@@ -69,6 +70,7 @@ function lastTwo(trend: TrendPoint[] | null) {
   }
 }
 
+/** A photo for a product followed before photos were kept, from the cache. */
 function imageFromCache(code: string): string | null {
   const rows = getDb()
     .prepare(
@@ -84,9 +86,9 @@ function imageFromCache(code: string): string | null {
     if (found?.imageUrl) {
       getDb()
         .prepare(
-          "update tracked_products set image_url = ? where mode = ? and product_code = ?"
+          "update tracked_products set image_url = ? where owner = ? and product_code = ?"
         )
-        .run(found.imageUrl, config().mode, code)
+        .run(found.imageUrl, owner(), code)
       return found.imageUrl
     }
   }
@@ -95,23 +97,23 @@ function imageFromCache(code: string): string | null {
 
 export const getOverview = createServerFn({ method: "GET" }).handler(
   async (): Promise<Overview> => {
-    const mode = config().mode
+    const who = owner()
     const db = getDb()
     const rows = db
       .prepare(
-        "select product_code, ean, title, image_url from tracked_products where mode = ? order by added_at desc"
+        "select product_code, ean, title, image_url from tracked_products where owner = ? order by added_at desc"
       )
-      .all(mode) as {
+      .all(who) as {
       product_code: string
       ean: string | null
       title: string | null
       image_url: string | null
     }[]
     const lastDay = db.prepare(
-      "select day, market, price, sales, revenue from product_snapshots where mode = ? and product_code = ? and day = (select max(day) from product_snapshots where mode = ? and product_code = ?)"
+      "select day, market, price, sales, revenue from product_snapshots where owner = ? and product_code = ? and day = (select max(day) from product_snapshots where owner = ? and product_code = ?)"
     )
     const products: OverviewProduct[] = rows.map((r) => {
-      const snap = lastDay.all(mode, r.product_code, mode, r.product_code) as {
+      const snap = lastDay.all(who, r.product_code, who, r.product_code) as {
         day: string
         market: string
         price: number | null
@@ -128,8 +130,8 @@ export const getOverview = createServerFn({ method: "GET" }).handler(
         ean: r.ean,
         title: r.title,
         imageUrl,
-        sales: sum(nl?.sales, be?.sales),
-        revenue: sum(nl?.revenue, be?.revenue),
+        sales: sumMarkets(nl?.sales, be?.sales),
+        revenue: sumMarkets(nl?.revenue, be?.revenue),
         price: nl?.price ?? be?.price ?? null,
         day: snap[0]?.day ?? null,
         trend,
@@ -138,35 +140,45 @@ export const getOverview = createServerFn({ method: "GET" }).handler(
       }
     })
     // Store requests are free and need no bundle.
-    const store = await apiGet<StoreOverview>("store/overview/", { days: 30 })
+    const store = await apiGet<StoreOverview>(
+      "store/overview/",
+      { days: 30 },
+      (mm) => mm.store.overview({ days: 30 })
+    )
     // An empty watchlist: suggest best sellers from the same default list as
     // on Products (one request a day, or the cache).
     const suggestions =
       products.length === 0
-        ? await defaultList<ProductList>("research/products/", productQuery({}))
+        ? await defaultList<ProductList>(
+            "research/products/",
+            productQuery({}),
+            (mm) => mm.products.list(productQuery({}))
+          )
         : null
     return { products, store, suggestions }
   }
 )
 
-/** Load the trend line of the given products (or all followed ones without one). */
+/**
+ * Load the trend line of the given followed products, or of all followed
+ * products without a current one. Each costs one research request (or the
+ * cache), so only products you follow qualify: other codes are ignored.
+ */
 export const loadTrends = createServerFn({ method: "POST" })
-  .validator((input: { codes?: string[] }) => input)
+  .validator((input: { codes?: string[] }) => ({
+    codes: productCodes(fields(input).codes, 50),
+  }))
   .handler(async ({ data }) => {
-    const mode = config().mode
-    const codes =
-      data.codes ??
-      (
-        getDb()
-          .prepare("select product_code from tracked_products where mode = ?")
-          .all(mode) as { product_code: string }[]
-      )
-        .map((r) => r.product_code)
-        .filter((code) => !trendIsCurrent(code))
+    const followed = trackedCodes()
+    const codes = data.codes
+      ? data.codes.filter((code) => followed.includes(code))
+      : followed.filter((code) => !trendIsCurrent(code))
     let fetched = 0
     let cached = 0
     for (const code of codes) {
-      const result = await apiGet<History>(trendPath(code), TREND)
+      const result = await apiGet<History>(trendPath(code), TREND, (mm) =>
+        mm.products.salesHistory(code, TREND)
+      )
       if (!result.ok) return { fetched, cached, error: result }
       if (result.fromCache) cached += 1
       else fetched += 1

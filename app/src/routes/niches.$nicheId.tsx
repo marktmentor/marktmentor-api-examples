@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router"
 import { getNicheDetail } from "@/api/niches"
-import { listTracked } from "@/api/tracked"
+import { getTrackedCodes } from "@/api/tracked"
 import { ApiError } from "@/components/api-error"
 import { MarketToggle } from "@/components/filters/market-toggle"
 import { NicheKpis } from "@/components/niche/niche-kpis"
@@ -28,7 +28,7 @@ export const Route = createFileRoute("/niches/$nicheId")({
       data: { id, market: s.market, period: s.period },
     })
     if (!niche.ok) return { niche, tab: null, tracked: new Set<string>() }
-    const tracked = new Set((await listTracked()).map((t) => t.productCode))
+    const tracked = new Set(await getTrackedCodes())
     return { niche, tab: await loadNicheTab(id, s), tracked }
   },
   // No page skeleton: on a tab, filter or market change the page stays and

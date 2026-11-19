@@ -5,6 +5,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useI18n } from "@/i18n"
+import { cn } from "@/lib/utils"
 import type { Quota } from "@/lib/types"
 
 /** The research allowance from the X-Research-Requests-* headers. */
@@ -31,12 +32,15 @@ export function QuotaMeter({
     <div className="flex flex-col gap-2">
       <Tooltip>
         <TooltipTrigger asChild>
+          {/* tabIndex: keyboard users can reach the tooltip too. */}
           <div
-            className={
+            tabIndex={0}
+            className={cn(
+              "rounded-sm outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50",
               stacked
                 ? "flex flex-col gap-0.5 text-sm"
                 : "flex flex-wrap items-baseline justify-between gap-x-2 text-sm"
-            }
+            )}
           >
             <span className="text-xs text-muted-foreground">
               {m.quota.label}

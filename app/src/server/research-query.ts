@@ -15,6 +15,9 @@ export const product = (code: string, endpoint = "") =>
 export const niche = (id: string, endpoint = "") =>
   `research/niches/${encodeURIComponent(id)}/${endpoint}`
 
+/** The niche id as the SDK takes it: a number (the URL gives a string). */
+export const nicheId = (id: string) => Number(id)
+
 export const history = (
   period: HistoryPeriod,
   interval: Interval,
@@ -27,7 +30,7 @@ export const history = (
 })
 
 export const reviewParams = (q: ReviewQuery) => ({
-  market: "ALL",
+  market: "ALL" as const,
   period: q.period ?? "1Y",
   page: q.page ?? 1,
   pageSize: 10,

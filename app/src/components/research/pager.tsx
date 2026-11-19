@@ -12,37 +12,54 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useI18n } from "@/i18n"
-import type { Pagination as PaginationData } from "@/lib/types"
+/** The page fields the pager needs; research and store lists both have them. */
+type PaginationData = { page: number; pageSize: number; hasNext: boolean }
 
-/** Previous / current / next for a paginated research list. */
+/** Previous / current / next for a paginated list. */
 export function Pager({
   pagination,
   onPage,
+  free = false,
 }: {
   pagination: PaginationData
   onPage: (page: number) => void
+  /** Store lists: a page costs no research request, so no cost tooltip. */
+  free?: boolean
 }) {
   const { m } = useI18n()
   if (pagination.page <= 1 && !pagination.hasNext) return null
   // At most 10,000 results per query (page x pageSize).
   const canNext =
     pagination.hasNext && pagination.page * pagination.pageSize < 10_000
-  const go = (page: number) => (e: React.MouseEvent) => {
+  const canPrevious = pagination.page > 1
+  // A disabled link still fires onClick on Enter, so check here too.
+  const go = (page: number, enabled: boolean) => (e: React.MouseEvent) => {
     e.preventDefault()
-    onPage(page)
+    if (enabled) onPage(page)
   }
+  const next = (
+    <PaginationNext
+      href="#"
+      text={m.common.next}
+      aria-label={m.common.nextPage}
+      aria-disabled={!canNext}
+      tabIndex={canNext ? undefined : -1}
+      className={!canNext ? "pointer-events-none opacity-50" : ""}
+      onClick={go(pagination.page + 1, canNext)}
+    />
+  )
   return (
-    <Pagination>
+    <Pagination aria-label={m.common.pagination}>
       <PaginationContent>
         <PaginationItem>
           <PaginationPrevious
             href="#"
             text={m.common.previous}
-            aria-disabled={pagination.page <= 1}
-            className={
-              pagination.page <= 1 ? "pointer-events-none opacity-50" : ""
-            }
-            onClick={go(pagination.page - 1)}
+            aria-label={m.common.previousPage}
+            aria-disabled={!canPrevious}
+            tabIndex={canPrevious ? undefined : -1}
+            className={!canPrevious ? "pointer-events-none opacity-50" : ""}
+            onClick={go(pagination.page - 1, canPrevious)}
           />
         </PaginationItem>
         <PaginationItem>
@@ -51,18 +68,14 @@ export function Pager({
           </PaginationLink>
         </PaginationItem>
         <PaginationItem>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <PaginationNext
-                href="#"
-                text={m.common.next}
-                aria-disabled={!canNext}
-                className={!canNext ? "pointer-events-none opacity-50" : ""}
-                onClick={go(pagination.page + 1)}
-              />
-            </TooltipTrigger>
-            <TooltipContent>{m.common.nextCost}</TooltipContent>
-          </Tooltip>
+          {free ? (
+            next
+          ) : (
+            <Tooltip>
+              <TooltipTrigger asChild>{next}</TooltipTrigger>
+              <TooltipContent>{m.common.nextCost}</TooltipContent>
+            </Tooltip>
+          )}
         </PaginationItem>
       </PaginationContent>
     </Pagination>

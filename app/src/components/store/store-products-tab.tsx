@@ -82,6 +82,7 @@ export function StoreProductsTab({
           <Input
             value={eans}
             onChange={(e) => setEans(e.target.value)}
+            aria-label={m.storeFilters.eans}
             placeholder={m.storeFilters.eans}
             className="h-8 w-full sm:w-64"
           />
@@ -111,6 +112,7 @@ export function StoreProductsTab({
                 type="button"
                 variant="outline"
                 size="sm"
+                aria-label={m.common.csv}
                 onClick={() =>
                   downloadCsv(
                     "store-products.csv",
@@ -168,6 +170,7 @@ export function StoreProductsTab({
             <StoreProductsTable products={d.data} />
           )}
           <Pager
+            free
             pagination={d.pagination}
             onPage={(page) => onQuery({ ...query, page })}
           />

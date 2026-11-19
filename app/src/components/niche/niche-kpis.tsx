@@ -1,4 +1,4 @@
-import { TrendingDownIcon, TrendingUpIcon } from "lucide-react"
+import { MinusIcon, TrendingDownIcon, TrendingUpIcon } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import {
   Card,
@@ -19,24 +19,13 @@ import {
 } from "@/components/ui/table"
 import { useI18n } from "@/i18n"
 import type { Market } from "@/lib/filters"
-import type { MarketMetrics, NicheDetail } from "@/lib/types"
+import { marketValue } from "@/lib/markets"
+import type { NicheDetail } from "@/lib/types"
 
 type Key = "searchVolume" | "sales" | "revenue"
 const DAYS = { "30d": 30, "90d": 90, "365d": 365 } as const
 
-function value(
-  markets: Partial<Record<"NL" | "BE", MarketMetrics>> | undefined,
-  key: Key,
-  market: Market
-) {
-  if (!markets) return null
-  if (market !== "ALL") return markets[market]?.[key] ?? null
-  const nl = markets.NL?.[key]
-  const be = markets.BE?.[key]
-  return nl == null && be == null ? null : (nl ?? 0) + (be ?? 0)
-}
-
-/** The niche figures, each compared with an average 30 days of the last year (comparePeriods). */
+/** The niche figures, each compared with an average period of the same length in the last year (comparePeriods). */
 export function NicheKpis({
   niche,
   market,
@@ -46,11 +35,11 @@ export function NicheKpis({
   market: Market
   period: "30d" | "90d" | "365d"
 }) {
-  const { m, num, eur, dec, pct } = useI18n()
+  const { m, fill, num, eur, dec, pct } = useI18n()
   const year = niche.periods?.find((p) => p.period === "365d")
   const change = (key: Key) => {
-    const now = value(niche.markets, key, market)
-    const total = value(year?.markets, key, market)
+    const now = marketValue(niche.markets, key, market)
+    const total = marketValue(year?.markets, key, market)
     if (now == null || !total || period === "365d") return null
     // Totals per period: scale the year to the same number of days.
     const average = (total * DAYS[period]) / 365
@@ -66,19 +55,19 @@ export function NicheKpis({
     {
       key: "searchVolume",
       label: m.niche.searchVolume,
-      value: num(value(niche.markets, "searchVolume", market)),
+      value: num(marketValue(niche.markets, "searchVolume", market)),
       change: change("searchVolume"),
     },
     {
       key: "sales",
       label: m.niche.sales,
-      value: num(value(niche.markets, "sales", market)),
+      value: num(marketValue(niche.markets, "sales", market)),
       change: change("sales"),
     },
     {
       key: "revenue",
       label: m.niche.revenue,
-      value: eur(value(niche.markets, "revenue", market)),
+      value: eur(marketValue(niche.markets, "revenue", market)),
       change: change("revenue"),
     },
     {
@@ -101,7 +90,13 @@ export function NicheKpis({
             {c.change !== null && (
               <CardAction>
                 <Badge variant="outline">
-                  {c.change >= 0 ? <TrendingUpIcon /> : <TrendingDownIcon />}
+                  {c.change > 0 ? (
+                    <TrendingUpIcon />
+                  ) : c.change < 0 ? (
+                    <TrendingDownIcon />
+                  ) : (
+                    <MinusIcon />
+                  )}
                   {pct(c.change)}
                 </Badge>
               </CardAction>
@@ -109,7 +104,9 @@ export function NicheKpis({
           </CardHeader>
           <CardFooter className="text-sm text-muted-foreground">
             {c.footer ??
-              (c.change !== null ? m.niche.vsYear : m.niche.marketPeriod)}
+              (c.change !== null
+                ? fill(m.niche.vsYear, { days: DAYS[period] })
+                : m.niche.marketPeriod)}
           </CardFooter>
         </Card>
       ))}
@@ -167,12 +164,12 @@ export function PeriodsTable({
                   {keys.map((k) => (
                     <TableCell key={k} className="text-right tabular-nums">
                       {(k === "revenue" ? eur : num)(
-                        value(r.markets, k, market)
+                        marketValue(r.markets, k, market)
                       )}
                     </TableCell>
                   ))}
                   {keys.map((k) => {
-                    const v = value(r.markets, k, market)
+                    const v = marketValue(r.markets, k, market)
                     return (
                       <TableCell
                         key={`${k}-avg`}

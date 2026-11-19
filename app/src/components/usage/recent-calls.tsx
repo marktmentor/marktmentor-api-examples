@@ -25,7 +25,7 @@ const shortPath = (path: string) =>
     .replace(/\/$/, "")
 
 export function RecentCalls() {
-  const { m, num } = useI18n()
+  const { m, num, time } = useI18n()
   const { data } = useUsage()
   const kindLabel = {
     cost: m.ticker.kindCost,
@@ -33,12 +33,6 @@ export function RecentCalls() {
     free: m.ticker.kindFree,
     failed: m.ticker.kindFailed,
   }
-  const time = (at: string) =>
-    new Date(at).toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: "2-digit",
-    })
   return (
     <div className="flex flex-col gap-2">
       <span className="font-medium">{m.ticker.recentTitle}</span>

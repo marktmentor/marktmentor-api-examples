@@ -1,0 +1,10 @@
+# Only the sources: never a local .env, the SQLite cache or a local build.
+.env*
+data/
+*.db
+*.db-*
+node_modules/
+dist/
+.output/
+.tanstack/
+.nitro/

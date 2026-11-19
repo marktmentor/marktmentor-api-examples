@@ -3,7 +3,6 @@
     "title": "MarktMentor API example",
     "appName": "API example",
     "language": "Language",
-    "theme": "Theme",
     "light": "Light",
     "dark": "Dark",
     "system": "System",
@@ -21,10 +20,17 @@
     "docs": "API docs"
   },
   "demo": {
-    "title": "Demo mode",
-    "body": "You are looking at sample data from the API reference, not live data. Every search shows the same few products. Add MARKTMENTOR_API_KEY to .env and restart to see your own data."
+    "title": "Demo with sample data",
+    "badge": "Demo · sample data",
+    "body": "This app calls the real MarktMentor API with the public test key mm_test_demo. The test key answers from production data recorded on 17 November 2026 for a closed set: the niche “drinkfles” and its 10 best-selling products, plus the fictional store “Voorbeeldwinkel BV”. Search, filters, sorting, pages, markets and periods work on that set. Each product and niche in a list opens; a code that you type outside the set gives HTTP 404. This is not live data.",
+    "tryLabel": "Try the examples:",
+    "exampleProduct": "Example product",
+    "exampleNiche": "Example niche",
+    "ownData": "For your own data, run this app on your computer with your own API key in MARKTMENTOR_API_KEY.",
+    "notFoundHint": "The test key knows only its example products and the niche “drinkfles”. Open one of the examples, or pick a product from the Products or Niches page.",
+    "oneNiche": "The test key has one example niche, so sorting and the page size do not change this list."
   },
-  "footer": "Example project for the MarktMentor Public API. It runs on your own computer only (127.0.0.1). The API terms apply to the data, also in the local database.",
+  "footer": "Example project for the MarktMentor Public API. With your own key it runs on your own computer only (127.0.0.1); only demo mode with the public test key may be public. The general terms of MarktMentor apply to the data, also in the local database.",
   "quota": {
     "label": "Research requests",
     "unknown": "Not known yet",
@@ -47,24 +53,22 @@
     "be": "Belgium",
     "nlShort": "NL",
     "beShort": "BE",
-    "last30": "last 30 days",
     "both": "NL + BE",
     "csv": "Export CSV",
-    "back": "Back",
     "follow": "Follow",
     "following": "Following",
     "none": "–",
     "ean": "EAN",
     "search": "Search",
-    "page": "Page {page}",
     "previous": "Previous",
     "next": "Next",
     "nextCost": "The next page uses one research request.",
-    "was": "was {v}"
+    "was": "was {v}",
+    "pagination": "Pagination",
+    "previousPage": "Go to the previous page",
+    "nextPage": "Go to the next page"
   },
   "overview": {
-    "title": "Overview",
-    "description": "Your connection, your allowance and the products you follow.",
     "connection": "Connection",
     "connected": "Connected",
     "notConnected": "Not connected",
@@ -89,19 +93,10 @@
     "localRows": "Local database: {cache} answers, {snapshots} snapshots.",
     "noResearchTitle": "This key has no research access",
     "noResearchBody": "Research needs an active paid MarktMentor Premium subscription or higher (a trial does not count). Then the organization gets 100 free research requests per month, or more with an API bundle. My store works with the Pro plan: store requests are free.",
-    "tracked": "Followed products",
-    "trackedDescription": "One snapshot per product per day, in your own SQLite database. Over time you build your own history.",
     "refresh": "Refresh",
     "refreshCost": "Uses at most {n} research requests: one per product, once a day.",
     "refreshDone": "{fetched} fetched ({fetched} requests), {cached} from the cache (no requests).",
-    "refreshStopped": "Stopped: {code}",
-    "emptyTracked": "You do not follow any products yet.",
-    "emptyTrackedHint": "Search for a product and select Follow.",
-    "goProducts": "Search products",
-    "lastSnapshot": "Last snapshot",
-    "priceNl": "Price NL",
     "sales30": "Sales 30d",
-    "snapshots": "Snapshots",
     "local": "Local data",
     "localDescription": "The database is data/marktmentor.db. Use the data for your own business only. Clear it when you no longer need it or when your API access ends.",
     "clear": "Clear local data",
@@ -115,32 +110,17 @@
     "title": "Products",
     "description": "Search bol product data for the Netherlands and Belgium. Each page of 25 products is one research request. The same search on the same day comes from the cache.",
     "query": "Search words",
-    "queryHint": "All words must match.",
-    "or": "or",
-    "eanPlaceholder": "5407005143414",
-    "queryPlaceholder": "drinkfles",
-    "sort": "Sort by",
-    "sorts": {
-      "-sales": "Sales (high to low)",
-      "-revenue": "Revenue (high to low)",
-      "price": "Price (low to high)",
-      "-price": "Price (high to low)"
-    },
-    "count": "{n} products",
     "product": "Product",
     "price": "Price NL",
     "sales": "Sales 30d",
-    "revenue": "Revenue 30d",
     "reviews": "Rating",
     "salesSplit": "NL {nl} · BE {be}",
-    "start": "Enter search words or an EAN. The app sends a request only when you select Search.",
     "empty": "No products found",
     "emptyHint": "This still counted as one request. Check the spelling: all words must match.",
     "followed": "You now follow this product.",
     "unfollowed": "You no longer follow this product."
   },
   "product": {
-    "total": "Total, last 30 days",
     "sellers": "Sellers",
     "price": "Price",
     "sales": "Sales",
@@ -168,19 +148,12 @@
   "niches": {
     "title": "Niches",
     "description": "A niche is a search term with its demand and supply. Each page of results is one research request.",
-    "count": "{n} niches",
     "niche": "Niche",
-    "searchVolume": "Search volume NL",
-    "revenue": "Revenue 30d",
     "products": "Products",
     "quality": "Quality",
     "competition": "Competition",
-    "start": "Enter a search term, for example drinkfles.",
     "empty": "No niches found",
     "emptyHint": "This still counted as one request.",
-    "volumeBoth": "Search volume NL / BE",
-    "revenueNl": "Revenue 30d NL",
-    "scores": "Quality / competition",
     "productsTitle": "Products in this niche",
     "productsDescription": "This page uses two research requests: the niche and its first 25 products."
   },
@@ -241,7 +214,7 @@
     "codes": {
       "not_authenticated": "No key was sent. Add MARKTMENTOR_API_KEY to .env.",
       "authentication_failed": "The key is wrong or revoked, or its creator is no longer an administrator. Create a new key in Settings → MarktMentor API.",
-      "api_terms_required": "An administrator must accept the API terms in the dashboard: Settings → MarktMentor API.",
+      "api_terms_required": "The owner or an administrator of the organization must accept the general terms in the dashboard: Settings → MarktMentor API.",
       "product_research_api_required": "Research needs an API bundle or research access from MarktMentor. My store works without a bundle (Pro plan).",
       "subscription_required": "Research needs an active paid MarktMentor Premium subscription or higher. A trial does not count. My store needs the Pro plan.",
       "subscription_plan_required": "The store endpoints need the Pro plan or higher.",
@@ -255,6 +228,7 @@
       "reserve_reached": "The app stops at the reserve to protect your allowance. Change MARKTMENTOR_RESERVE in .env.",
       "not_found": "This product or niche does not exist.",
       "not_found_html": "The path does not exist, the key is not valid, or the API is not enabled for your organization yet (early access). Check MARKTMENTOR_API_BASE_URL or contact MarktMentor.",
+      "follow_limit": "The demo follows at most 50 products per visitor. Stop following a product first.",
       "network_error": "The API cannot be reached. Check your connection and MARKTMENTOR_API_BASE_URL.",
       "research_unavailable": "Research data is temporarily unavailable. Try again later.",
       "billing_period_changed": "A new billing period started. Try again.",
@@ -361,7 +335,6 @@
     "keyword": "Keyword",
     "position": "Position",
     "volume": "Search volume",
-    "period": "Period",
     "periods": {
       "7d": "7 days",
       "30d": "30 days",
@@ -396,7 +369,6 @@
   },
   "reviews": {
     "summaryTitle": "Review summary",
-    "averageRating": "Average rating",
     "count": "{n} reviews",
     "positive": "Positive topics",
     "negative": "Negative topics",
@@ -467,13 +439,11 @@
       "NL": "NL",
       "BE": "BE"
     },
-    "period": "Period",
     "periods": {
       "30d": "30 days",
       "90d": "90 days",
       "365d": "1 year"
     },
-    "sort": "Sort by",
     "productSorts": {
       "-sales": "Sales, high to low",
       "sales": "Sales, low to high",
@@ -530,7 +500,7 @@
     "category": "Category"
   },
   "niche": {
-    "vsYear": "vs. an average 30 days in the last year",
+    "vsYear": "vs. an average {days} days in the last year",
     "perMonth": "Per 30 days",
     "total": "Total",
     "searchVolume": "Search volume",
@@ -577,14 +547,11 @@
   "usagePage": {
     "title": "API usage",
     "description": "Your connection, the allowance, the limits per minute, the log of calls and the local data.",
-    "connection": "Connection",
-    "plan": "Research plan",
     "limits": "Limits per minute",
-    "cache": "Local cache",
     "cacheBody": "{cache} answers in the cache, {snapshots} snapshots, {requests} calls in the log.",
     "cacheHint": "Research answers stay valid for the rest of the day. A repeated question costs nothing.",
     "unmeteredNote": "This research access is not counted: responses have no X-Research-Requests headers, so there is no allowance to show.",
-    "freeNote": "Free requests: 100 successful research requests per calendar month (UTC) for the organization, shared by all API keys and the portal. At most 10 results per page."
+    "freeNote": "Free requests: 100 successful research requests per calendar month (UTC) for the organization, shared by all API keys and the portal. At most 25 results per page."
   },
   "navExtra": {
     "usage": "API usage"
@@ -602,7 +569,6 @@
     "clearRange": "Use the last days",
     "eans": "EANs, separated by commas",
     "ean": "EAN",
-    "stockState": "Stock status",
     "allStates": "All statuses",
     "sorts": {
       "-revenue": "Revenue, high to low",
@@ -654,7 +620,7 @@
     "kindFree": "free",
     "kindFailed": "failed",
     "localOnly": "This meter reads the local log only. It never calls the API and costs nothing.",
-    "allUsage": "All of it in API usage",
+    "allUsage": "View all API usage",
     "rateLimited": "Per-minute limit reached",
     "reserve": "Reserve reached: research stops at {reserve}",
     "empty": "No calls yet",
@@ -662,7 +628,7 @@
   },
   "reference": {
     "pickCategory": "Choose a category",
-    "searchCategory": "Search a category…",
+    "searchCategory": "Search for a category…",
     "pickBrand": "Choose a brand",
     "searchBrand": "Type at least 2 letters…",
     "typeTwo": "Type at least 2 letters of the brand.",
