@@ -270,7 +270,8 @@ class Allowance:
 def connect(reserve: Optional[int] = None) -> tuple[MarktMentor, Allowance]:
     """The SDK client with the key from the environment, and its Allowance."""
     if sys.version_info < (3, 10):
-        # The SDK installs on 3.9, but fails there on each typed answer.
+        # pip does not install the SDK on 3.9; this covers a run with another
+        # Python than the one that installed it.
         raise SystemExit("These scripts need Python 3.10 or later.")
     key = os.environ.get("MARKTMENTOR_API_KEY", "")
     if not key:
