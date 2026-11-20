@@ -6,8 +6,8 @@
 --start and --end set the period of the products. The overview endpoint
 accepts only a number of days, so the overview covers the last --days days.
 
-Store requests are free and do not need an API bundle. They need the Pro plan
-and a connected bol store. Limit: 60 store requests per minute.
+Store requests are free and do not need an API bundle. They need a connected
+bol store (and Premium, like the whole API). Limit: 60 store requests per minute.
 """
 
 import argparse

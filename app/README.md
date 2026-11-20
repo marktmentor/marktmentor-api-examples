@@ -58,7 +58,7 @@ the organization has 100 free research requests per month (at most 25 results
 per page); the usage page shows how many are left. Lower `MARKTMENTOR_RESERVE`
 (for example to 5) to use more of them. Without Premium, the research pages
 show HTTP 403 `subscription_required` with an explanation. **My store** works
-without a bundle (Pro plan and a connected store).
+without a bundle (a connected store).
 
 ## Screens
 

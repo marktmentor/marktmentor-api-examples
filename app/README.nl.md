@@ -59,7 +59,7 @@ bundel heeft de organisatie 100 gratis research-aanvragen per maand (hooguit 25
 resultaten per pagina); de gebruikspagina toont hoeveel er over zijn. Verlaag
 `MARKTMENTOR_RESERVE` (bijvoorbeeld naar 5) om er meer te gebruiken. Zonder
 Premium tonen de research-pagina's HTTP 403 `subscription_required` met uitleg.
-**Mijn winkel** werkt zonder bundel (Pro-abonnement en een gekoppelde winkel).
+**Mijn winkel** werkt zonder bundel (met een gekoppelde winkel).
 
 ## Schermen
 

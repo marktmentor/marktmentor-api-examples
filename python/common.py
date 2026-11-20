@@ -46,13 +46,12 @@ EXPLANATIONS = {
     ),
     "product_research_api_required": (
         "Research needs an API bundle or research access from MarktMentor. "
-        "The store endpoints work without a bundle (Pro plan)."
+        "The store endpoints work without a bundle."
     ),
     "subscription_required": (
-        "Research needs an active paid MarktMentor Premium subscription or "
-        "higher (a trial does not count). The store endpoints need Pro."
+        "The API needs an active paid MarktMentor Premium subscription or "
+        "higher (a trial does not count)."
     ),
-    "subscription_plan_required": "The store endpoints need the Pro plan or higher.",
     "insufficient_scope": "The credential does not have the necessary scope.",
     "store_not_connected": "Connect your bol store in the dashboard first.",
     "bundle_exhausted": "All requests of the API bundle are used for this period.",

@@ -1,5 +1,5 @@
 // Server functions for the store endpoints. Store requests are free, need no
-// bundle (Pro plan and a connected store) and are not cached: they change
+// bundle (only a connected store) and are not cached: they change
 // during the day.
 import { createServerFn } from "@tanstack/react-start"
 import { apiGet } from "@/server/client"

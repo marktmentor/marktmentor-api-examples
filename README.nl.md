@@ -32,12 +32,11 @@ hun uitvoer in het Engels, net als de API en de documentatie.
 2. Een beheerder maakt op dezelfde pagina een key en kopieert hem. Het
    geheim zie je maar één keer. De key stopt als de maker geen beheerder van
    de organisatie meer is.
-3. Wat kan je key lezen?
-   - **De endpoints voor je winkel** (je eigen bol-winkel): Pro-abonnement en
-     een gekoppelde winkel. Gratis, geen bundel nodig.
-   - **De endpoints voor research** (producten en niches): een actief, betaald
-     MarktMentor Premium-abonnement of hoger. Een proefperiode telt niet.
-     Zonder bundel krijgt de organisatie 100 gratis research-aanvragen per
+3. Wat kan je key lezen? Voor de hele API heb je een actief, betaald
+   MarktMentor Premium-abonnement of hoger nodig; een proefperiode telt niet.
+   - **De endpoints voor je winkel** (je eigen bol-winkel): een gekoppelde
+     winkel. Gratis, geen bundel nodig.
+   - **De endpoints voor research** (producten en niches): zonder bundel krijgt de organisatie 100 gratis research-aanvragen per
      kalendermaand (UTC), met hooguit 25 resultaten per pagina. De
      API-referentie in de browser en alle keys delen die aanvragen. Een
      API-bundel geeft er meer. Zonder Premium geven research-aanvragen HTTP 403
@@ -111,8 +110,7 @@ en de foutcodes in gewone woorden.
 | HTML `404 Not Found`                | Verkeerde basis-URL, of de API staat nog niet aan voor je organisatie (early access). Neem contact op. |
 | `401 authentication_failed`         | Verkeerde of ingetrokken key, of de maker is geen beheerder meer. Maak een nieuwe key.             |
 | `403 api_terms_required`            | De eigenaar of een beheerder accepteert de algemene voorwaarden in het dashboard.                  |
-| `403 subscription_required`         | Voor research heb je een actief, betaald Premium-abonnement nodig. Een proefperiode telt niet. Voor de winkelscripts heb je Pro nodig. |
-| `403 subscription_plan_required`    | Voor de endpoints van je winkel heb je het Pro-abonnement nodig.                                   |
+| `403 subscription_required`         | Voor de API heb je een actief, betaald Premium-abonnement nodig. Een proefperiode telt niet.       |
 | `403 bundle_payment_failed`         | De betaling voor de verlenging van de API-bundel is mislukt. De eigenaar past de betaalmethode aan in het dashboard. |
 | `409 store_not_connected`           | Koppel je bol-winkel in het dashboard.                                                             |
 | `402 bundle_exhausted`              | De bundel is op voor deze factuurperiode.                                                          |

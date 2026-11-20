@@ -32,7 +32,7 @@ def main() -> None:
         print(
             "  No research access. Research needs an active paid MarktMentor "
             "Premium subscription (100 free requests per month) or an API bundle. "
-            "The store endpoints work with the Pro plan."
+            "The store endpoints work without a bundle."
         )
     if allowance.rate_remaining is not None:
         # The limit counts per call group; usage/ is in the account group.

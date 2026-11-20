@@ -31,11 +31,11 @@ Guides and reference: <https://api.marktmentor.nl>.
 2. An administrator creates an API key on the same page and copies it. The
    secret is shown only once. The key stops working when its creator is no
    longer an administrator of the organization.
-3. Know what your key can read:
-   - **Store endpoints** (your own bol store): the Pro plan and a connected store.
-     They are free and need no bundle.
-   - **Research endpoints** (products and niches): an active paid MarktMentor
-     Premium subscription or higher. A trial does not count. Without a bundle
+3. Know what your key can read. The whole API needs an active paid MarktMentor
+   Premium subscription or higher; a trial does not count.
+   - **Store endpoints** (your own bol store): a connected store. They are free
+     and need no bundle.
+   - **Research endpoints** (products and niches): without a bundle
      the organization gets 100 free research requests per calendar month
      (UTC), with at most 25 results per page. The API reference in the browser
      and all API keys share these requests. An API bundle gives more. Without
@@ -106,8 +106,7 @@ words.
 | HTML `404 Not Found`                | Wrong base URL, or the API is not enabled for your organization yet (early access). Contact MarktMentor.     |
 | `401 authentication_failed`         | Wrong or revoked key, or its creator is no longer an administrator. Create a new key.                        |
 | `403 api_terms_required`            | The owner or an administrator accepts the general terms in the dashboard.                                    |
-| `403 subscription_required`         | Research needs an active paid Premium subscription. A trial does not count. Store scripts need Pro.          |
-| `403 subscription_plan_required`    | Store endpoints need the Pro plan.                                                                           |
+| `403 subscription_required`         | The API needs an active paid Premium subscription. A trial does not count.                                   |
 | `403 bundle_payment_failed`         | The renewal payment of the API bundle failed. The owner updates the payment method in the dashboard.         |
 | `409 store_not_connected`           | Connect your bol store in the dashboard.                                                                     |
 | `402 bundle_exhausted`              | The bundle is used up for this billing period.                                                               |
