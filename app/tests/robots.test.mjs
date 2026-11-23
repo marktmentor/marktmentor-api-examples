@@ -85,6 +85,52 @@ test("a HEAD answer and a compressed page keep their body", async () => {
   assert.equal(await zipped.text(), "<head>")
 })
 
+test("a file response is not wrapped and its body is not read", async () => {
+  // Reading `.body` of a srvx file response turns its Node stream into an
+  // undici web stream, which crashed the process on aborted downloads.
+  let bodyRead = false
+  const file = new Response("bytes", {
+    headers: { "Content-Type": "image/png" },
+  })
+  const original = new Proxy(file, {
+    get(target, key) {
+      if (key === "body") bodyRead = true
+      const value = Reflect.get(target, key, target)
+      return typeof value === "function" ? value.bind(target) : value
+    },
+  })
+  const response = await run(NOINDEX, original)
+  assert.equal(response, original)
+  assert.equal(bodyRead, false)
+  assert.equal(response.headers.get("X-Robots-Tag"), NOINDEX)
+})
+
+test("a response with immutable headers is copied with the header", async () => {
+  const frozen = new Response("data", {
+    status: 201,
+    headers: { "Content-Type": "application/json" },
+  })
+  const headers = frozen.headers
+  Object.defineProperty(frozen, "headers", {
+    value: new Proxy(headers, {
+      get(target, key) {
+        if (key === "set") {
+          return () => {
+            throw new TypeError("immutable")
+          }
+        }
+        const value = Reflect.get(target, key, target)
+        return typeof value === "function" ? value.bind(target) : value
+      },
+    }),
+  })
+  const response = await run(NOINDEX, frozen)
+  assert.notEqual(response, frozen)
+  assert.equal(response.status, 201)
+  assert.equal(response.headers.get("X-Robots-Tag"), NOINDEX)
+  assert.equal(await response.text(), "data")
+})
+
 test("with indexing on, the response is unchanged", async () => {
   const original = new Response("<html><head></head></html>", {
     headers: { "Content-Type": "text/html" },

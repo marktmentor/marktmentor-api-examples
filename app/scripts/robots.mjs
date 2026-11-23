@@ -27,18 +27,36 @@ export function robotsMiddleware(policy) {
   return async (request, next) => {
     const response = await next()
     if (!policy) return response
-    const headers = new Headers(response.headers)
-    headers.set("X-Robots-Tag", policy)
-    const isHtml = (headers.get("Content-Type") ?? "").includes("text/html")
-    let body = response.body
-    if (isHtml && body && !headers.has("Content-Encoding")) {
-      body = withRobotsMeta(await response.text(), policy)
+    const isHtml = (response.headers.get("Content-Type") ?? "").includes(
+      "text/html"
+    )
+    if (isHtml && response.body && !response.headers.has("Content-Encoding")) {
+      const headers = new Headers(response.headers)
+      headers.set("X-Robots-Tag", policy)
       headers.delete("Content-Length")
+      return new Response(withRobotsMeta(await response.text(), policy), {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      })
     }
-    return new Response(body, {
-      status: response.status,
-      statusText: response.statusText,
-      headers,
-    })
+    // Do not touch response.body here. For a static file it is a Node file
+    // stream, and reading `.body` turns it into a web stream (undici). When a
+    // client closes the connection at the end of that stream, undici throws
+    // ERR_INVALID_STATE in a microtask and the process stops (api-demo crash,
+    // 2026-11-21). Set the header on the response itself.
+    try {
+      response.headers.set("X-Robots-Tag", policy)
+      return response
+    } catch {
+      // Immutable headers (a fetch() response): copy them, keep the body.
+      const headers = new Headers(response.headers)
+      headers.set("X-Robots-Tag", policy)
+      return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+      })
+    }
   }
 }
